@@ -1,0 +1,132 @@
+# Russian translation of Related-Posts-Thubmnails plugin
+# Copyright (C) 2010 M.I.Shaldybina
+# This file is distributed under the same license as the Related-Posts-Thubmnails package.
+# Maria Shaldybina <mary@shaldybina.com>, 2010
+msgid ""
+msgstr ""
+"Project-Id-Version: Related Posts Thubmnails 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-19 17:17-0700\n"
+"PO-Revision-Date: 2010-05-19 17:38-0700\n"
+"Last-Translator: M.Shaldybina <mary@shaldybina.com>\n"
+"Language-Team: ru_RU <mary@shaldybina.com>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: related-posts-thumbnails.php:148
+msgid "Related Posts Thumbnails"
+msgstr "Миниатюры похожих записей"
+
+#: related-posts-thumbnails.php:148
+msgid "Related Posts Thumbs"
+msgstr "Похожие записи"
+
+#: related-posts-thumbnails.php:154
+msgid "No access"
+msgstr "Нет доступа"
+
+#: related-posts-thumbnails.php:170
+msgid "Settings updated"
+msgstr "Настройки обновлены"
+
+#: related-posts-thumbnails.php:182
+msgid "Related Posts Thumbnails Settings"
+msgstr "Настройки миниатюр похожих записей"
+
+#: related-posts-thumbnails.php:188
+msgid "General Display Options"
+msgstr "Общие свойства отображения"
+
+#: related-posts-thumbnails.php:191
+msgid "Display options"
+msgstr "Параметр отображения"
+
+#: related-posts-thumbnails.php:194
+msgid "Show on single posts only"
+msgstr "Показывать только на отдельной странице"
+
+#: related-posts-thumbnails.php:198
+msgid "Top text"
+msgstr "Верхний текст"
+
+#: related-posts-thumbnails.php:204
+msgid "Number of similar posts to display"
+msgstr "Количество похожих записей для отображения"
+
+#: related-posts-thumbnails.php:212
+msgid "Style options"
+msgstr "Опции стиля"
+
+#: related-posts-thumbnails.php:215
+msgid "Background color"
+msgstr "Цвет заднего фона"
+
+#: related-posts-thumbnails.php:221
+msgid "Background color on mouse over"
+msgstr "Цвет заднего фона при наведении курсора"
+
+#: related-posts-thumbnails.php:227
+msgid "Border color"
+msgstr "Цвет границы"
+
+#: related-posts-thumbnails.php:233
+msgid "Font color"
+msgstr "Цвет шрифта"
+
+#: related-posts-thumbnails.php:239
+msgid "Font family"
+msgstr "Стиль шрифта"
+
+#: related-posts-thumbnails.php:245
+msgid "Font size"
+msgstr "Размер шрифта"
+
+#: related-posts-thumbnails.php:251
+msgid "Text maximum length"
+msgstr "Максимальная длина текста"
+
+#: related-posts-thumbnails.php:259
+msgid "Relation Builder Options"
+msgstr "Настройки связей"
+
+#: related-posts-thumbnails.php:262
+msgid "Relation based on"
+msgstr "Связи расчитываются на основе"
+
+#: related-posts-thumbnails.php:265
+msgid "Categories"
+msgstr "Категорий"
+
+#: related-posts-thumbnails.php:267
+msgid "Tags"
+msgstr "Меток"
+
+#: related-posts-thumbnails.php:269
+msgid "Categories and Tags"
+msgstr "Категорий и меток"
+
+#: related-posts-thumbnails.php:275
+msgid "Thumbnails options"
+msgstr "Настройки миниатюр"
+
+#: related-posts-thumbnails.php:278
+msgid "Post-thumbnails name"
+msgstr "Название миниатюры"
+
+#: related-posts-thumbnails.php:286
+msgid "Your theme has to support post-thumbnails to have more choices"
+msgstr "Для более широкого выбора размеров, ваша тема должна поддерживать post-thumbnails"
+
+#: related-posts-thumbnails.php:291
+msgid "Default image URL"
+msgstr "Ссылка на картинку по умолчанию, в случае, если нет миниатюры"
+
+#: related-posts-thumbnails.php:299
+msgid "Save Changes"
+msgstr "Сохранить изменения"
