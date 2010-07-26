@@ -4,7 +4,7 @@ Donate link: http://wordpress.shaldybina.com/donate
 Tags: related, posts, thumbnail
 Requires at least: 2.9
 Tested up to: 3.0
-Stable tag: 1.2.4
+Stable tag: 1.2.6
 
 Customizable plugin, that nicely displays related posts thumbnails under the post.
 
@@ -22,6 +22,7 @@ Translations:
 
 * This plugin has Russian version
 * Thanks to <a href="http://www.li-an.fr/wpplugins/">Li-An</a> this plugin has French version
+* Thanks to <a href="http://gidibao.net/">Gidibao</a> this plugin has Italian version
 
 Related Links:
 
@@ -57,6 +58,12 @@ If there are no images of the specified size in the post, or file does not exist
 1. Plugin settings page
 
 == Changelog ==
+
+= 1.2.6 =
+* Fixed relative custom url
+
+= 1.2.5 = 
+* Fixed selection of categories on plugin settings page
 
 = 1.2.4 = 
 * French version updated
@@ -101,6 +108,12 @@ If there are no images of the specified size in the post, or file does not exist
 * Released plugin initial version
 
 == Upgrade Notice ==
+
+= 1.2.6 =
+* Fixed relative custom URL
+
+= 1.2.5 = 
+* Fixed selection of categories on plugin settings page
 
 = 1.2.4 =
 Last french version

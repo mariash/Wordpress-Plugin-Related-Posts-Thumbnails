@@ -2,7 +2,7 @@
   Plugin Name:  Related Posts Thumbnails
   Plugin URI:   http://wordpress.shaldybina.com/plugins/related-posts-thumbnails/
   Description:  Showing related posts thumbnails under the post.
-  Version:      1.2.4
+  Version:      1.2.6
   Author:       Maria Shaldybina
   Author URI:   http://shaldybina.com/
 */
@@ -92,8 +92,8 @@ class RelatedPostsThumbnails {
 		$whichterm = '';
 		$select_terms = array();
 		if ( $categories_show_all != '1') { // if only specific categories were selected
-			$select_terms = unserialize( get_option( 'relpoststh_show_categories',
-													 get_option( 'relpoststh_categories' ) ) );
+			$select_terms = get_option( 'relpoststh_show_categories',
+										get_option( 'relpoststh_categories' ) );
 			if ( empty( $select_terms ) ) // if no categories were specified intentionally return nothing
 				return $this->finish_process( $output, $debug . 'No categories were selected;', $time );
 		}
@@ -198,6 +198,8 @@ class RelatedPostsThumbnails {
 			if ( $thsource == 'custom-field' ) {
 				$debug .= 'Using custom field;';
 				$url = get_post_meta( $post->ID, get_option( 'relpoststh_customfield', $this->custom_field ), true );
+				if (strpos($url, '/wp-content') !== false)
+					$url = substr($url, strpos($url, '/wp-content'));
 				$theme_resize_url = get_option( 'relpoststh_theme_resize_url', '' );
 				if ( !empty( $theme_resize_url ) )
 					$url = $theme_resize_url . '?src=' . $url . '&w=' . $width . '&h=' . $height . '&zc=1&q=90';
@@ -209,6 +211,7 @@ class RelatedPostsThumbnails {
 					$debug .= 'Post-thumbnails enabled in theme;';
 					if ( $post_thumbnail_id !== false ) { // post has thumbnail
 						$debug .= 'Post has thumbnail;';
+						$debug .= 'Postthname: '.$poststhname.';';
 						$image = wp_get_attachment_image_src( $post_thumbnail_id, $poststhname );
 						$url = $image[0];
 						$from_post_body = false;
@@ -239,6 +242,12 @@ class RelatedPostsThumbnails {
 					else
 						$debug .= 'Found wrong formatted image;';
 				}
+			}
+			
+			if (strpos($url, '/') === 0)
+			{
+				$debug .= 'Relative url: '.$url.';';
+				$url = get_bloginfo('url') . $url;
 			}
 
 			$debug .= 'Image URL: '.$url.';';
@@ -297,7 +306,7 @@ class RelatedPostsThumbnails {
 		$categories_all = get_option( 'relpoststh_categoriesall', $this->categories_all );
 		if ( $categories_all != '1') { // only specific categories were selected
 			$post_categories = wp_get_object_terms( $id, array( 'category' ), array( 'fields' => 'ids' ) );
-			$relpoststh_categories = unserialize( get_option( 'relpoststh_categories' ) );
+			$relpoststh_categories = get_option( 'relpoststh_categories' );
 			if ( !is_array( $relpoststh_categories ) || !is_array( $post_categories ) ) // no categories were selcted or post doesn't belong to any
 				return false;
 			$common_categories = array_intersect( $relpoststh_categories, $post_categories );
@@ -350,9 +359,9 @@ class RelatedPostsThumbnails {
 				update_option( 'relpoststh_customheight', $_POST['relpoststh_customheight'] );
 				update_option( 'relpoststh_textblockheight', $_POST['relpoststh_textblockheight'] );
 				update_option( 'relpoststh_categoriesall', $_POST['relpoststh_categoriesall'] );
-				update_option( 'relpoststh_categories', serialize( $_POST['relpoststh_categories'] ) );
+				update_option( 'relpoststh_categories', $_POST['relpoststh_categories'] );
 				update_option( 'relpoststh_show_categoriesall', $_POST['relpoststh_show_categoriesall'] );
-				update_option( 'relpoststh_show_categories', serialize( $_POST['relpoststh_show_categories'] ) );
+				update_option( 'relpoststh_show_categories', $_POST['relpoststh_show_categories'] );
 				update_option( 'relpoststh_devmode', $_POST['relpoststh_devmode'] );
 				update_option( 'relpoststh_startdate', $set_date );
 				echo "<div class='updated fade'><p>" . __( 'Settings updated', 'related-posts-thumbnails' ) ."</p></div>";
@@ -374,8 +383,8 @@ class RelatedPostsThumbnails {
 		$relpoststh_thsource = get_option( 'relpoststh_thsource', $this->thsource );
 		$relpoststh_devmode = get_option( 'relpoststh_devmode', $this->devmode );
 		$relpoststh_categoriesall = get_option( 'relpoststh_categoriesall', $this->categories_all );
-		$relpoststh_categories = unserialize( get_option( 'relpoststh_categories' ) );
-		$relpoststh_show_categories = unserialize( get_option( 'relpoststh_show_categories', get_option( 'relpoststh_categories' ) ) );
+		$relpoststh_categories = get_option( 'relpoststh_categories' );
+		$relpoststh_show_categories = get_option( 'relpoststh_show_categories', get_option( 'relpoststh_categories' ) );
 		$relpoststh_show_categoriesall = get_option( 'relpoststh_show_categoriesall', $relpoststh_categoriesall );
 		$relpoststh_startdate = explode( '-', get_option( 'relpoststh_startdate' ) );
 		$thsources = array( 'post-thumbnails' => 'Post thumbnails', 'custom-field' => 'Custom field' );

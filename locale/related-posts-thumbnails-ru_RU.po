@@ -288,7 +288,7 @@ msgstr "Автоматически добавлять после записи"
 msgid ""
 "Or use <b>&lt;?php get_related_posts_thumbnails(); ?&gt;</b> in the Loop"
 msgstr ""
-"Или используйте <b>&lt;php get_related_posts_thumbnails(); ?&gt;</b> в цикле "
+"Или используйте <b>&lt;?php get_related_posts_thumbnails(); ?&gt;</b> в цикле "
 "темы"
 
 #: related-posts-thumbnails.php:451 related-posts-thumbnails.php:453
