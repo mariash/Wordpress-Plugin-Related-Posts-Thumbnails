@@ -2,7 +2,7 @@
   Plugin Name:  Related Posts Thumbnails
   Plugin URI:   http://wordpress.shaldybina.com/plugins/related-posts-thumbnails/
   Description:  Showing related posts thumbnails under the post.
-  Version:      1.2.6
+  Version:      1.3.1
   Author:       Maria Shaldybina
   Author URI:   http://shaldybina.com/
 */
@@ -25,7 +25,7 @@ class RelatedPostsThumbnails {
 	var $top_text = '<h3>Related posts:</h3>';
 	var $number = 3;
 	var $relation = 'categories';
-	var $poststh_name = 'thumbnail';
+	var $poststhname = 'thumbnail';
 	var $background = '#FFFFFF';
 	var $hoverbackground = '#EEEEEF';
 	var $border_color = '#DDDDDD';
@@ -41,6 +41,9 @@ class RelatedPostsThumbnails {
 	var $thsource = 'post-thumbnails';
 	var $categories_all = '1';
 	var $devmode = '0';
+	var $output_style = 'div';
+	var $post_types = array('post');
+	var $custom_taxonomies = array();
 
 	function RelatedPostsThumbnails() { // initialization
 		load_plugin_textdomain( 'related-posts-thumbnails', false, basename( dirname( __FILE__ ) ) . '/locale' );
@@ -49,6 +52,7 @@ class RelatedPostsThumbnails {
 			add_filter( 'the_content', array( $this, 'auto_show' ) );
 		add_action( 'admin_menu',  array( $this, 'admin_menu' ) );
 		add_shortcode( 'related-posts-thumbnails' , array( $this, 'get_html' ) );
+		$this->wp_version = get_bloginfo('version');
 	}
 
 	function auto_show( $content ) { // Automatically displaying related posts under post body
@@ -62,89 +66,117 @@ class RelatedPostsThumbnails {
 	}
 
 	function get_thumbnails( $show_top = false ) { // Retrieve Related Posts HTML for output
-		$output					= '';
-		$debug					= 'Developer mode initialisation;';
-		$time					= microtime(true);
-		$posts_number           = get_option( 'relpoststh_number', $this->number );
+		$output = '';
+		$debug = 'Developer mode initialisation; Version: 1.2.9;';
+		$time = microtime(true);
+		$posts_number = get_option( 'relpoststh_number', $this->number );
 		if ( $posts_number <= 0 ) // return nothing if this parameter was set to <= 0
 			return $this->finish_process( $output, $debug . 'Posts number is 0;', $time );
-		$id						= get_the_ID();
-		$relation				= get_option( 'relpoststh_relation', $this->relation );
-		$poststhname			= get_option( 'relpoststh_poststhname', $this->poststhname );
-		$text_length			= get_option( 'relpoststh_textlength', $this->text_length );
-		$excerpt_length			= get_option( 'relpoststh_excerptlength', $this->excerpt_length );
-		$thsource				= get_option( 'relpoststh_thsource', $this->thsource );
-		$categories_show_all	= get_option( 'relpoststh_show_categoriesall',
-											  get_option( 'relpoststh_categoriesall',
-														  $this->categories_all ) );
-		/* Get random posts according to given rules */
+		$id = get_the_ID();
+		$relation = get_option( 'relpoststh_relation', $this->relation );
+		$poststhname = get_option( 'relpoststh_poststhname', $this->poststhname );
+		$text_length = get_option( 'relpoststh_textlength', $this->text_length );
+		$excerpt_length = get_option( 'relpoststh_excerptlength', $this->excerpt_length );
+		$thsource = get_option( 'relpoststh_thsource', $this->thsource );
+		$categories_show_all = get_option( 'relpoststh_show_categoriesall', get_option( 'relpoststh_categoriesall', $this->categories_all ) );
+		$onlywiththumbs = ( current_theme_supports( 'post-thumbnails' ) && $thsource == 'post-thumbnails' ) ? get_option( 'relpoststh_onlywiththumbs', false) : false;
+		$post_type = get_post_type();
+
 		global $wpdb;
+
+		/* Get taxonomy terms */
+		$debug .= "Relation: $relation; All categories: $categories_show_all;";
+		$use_filter = ( $categories_show_all != '1' || $relation != 'no' );
+
+		if ( $use_filter ) {
+			$query_objects = "SELECT distinct object_id FROM $wpdb->term_relationships WHERE 1=1 ";
+
+			if ( $relation != 'no' ) { /* Get object terms */
+				if ( $relation == 'categories' )
+					$taxonomy = array( 'category' );
+				elseif ( $relation == 'tags' )
+					$taxonomy = array( 'post_tag' );
+				elseif ( $relation == 'custom') {
+					$taxonomy = get_option( 'relpoststh_custom_taxonomies', $this->custom_taxonomies );
+				}
+				else {
+					$taxonomy = array( 'category', 'post_tag' );
+				}
+				$object_terms = wp_get_object_terms( $id, $taxonomy, array( 'fields' => 'ids' ) );
+				if ( empty( $object_terms ) || !is_array( $object_terms ) ) // no terms to get taxonomy
+					return $this->finish_process( $output, $debug . 'No taxonomy terms to get posts;', $time );
+
+				$query = "SELECT term_taxonomy_id FROM $wpdb->term_taxonomy WHERE term_id in ('". implode( "', '", $object_terms ) . "')";
+				$object_taxonomy = $wpdb->get_results( $query );
+				$object_taxonomy_a = array();
+				if ( count( $object_taxonomy ) > 0 ) {
+					foreach ( $object_taxonomy as $item )
+						$object_taxonomy_a[] = $item->term_taxonomy_id;
+				}
+				$query_objects .= " AND term_taxonomy_id IN ('". implode( "', '", $object_taxonomy_a ) . "') ";
+			}
+
+			if ( $categories_show_all != '1' ) { /* Get filter terms */
+				$select_terms = get_option( 'relpoststh_show_categories',
+											get_option( 'relpoststh_categories' ) );
+				if ( empty( $select_terms ) || !is_array( $select_terms ) ) // if no categories were specified intentionally return nothing
+					return $this->finish_process( $output, $debug . 'No categories were selected;', $time );
+
+				$query = "SELECT term_taxonomy_id FROM $wpdb->term_taxonomy WHERE term_id in ('". implode( "', '", $select_terms ) . "')";
+				$taxonomy = $wpdb->get_results( $query );
+				$filter_taxonomy_a = array();
+				if ( count( $taxonomy ) > 0 ) {
+					foreach ($taxonomy as $item)
+						$filter_taxonomy_a[] = $item->term_taxonomy_id;					
+				}
+				if ($relation != 'no') {
+					$query_objects .= " AND object_id IN (SELECT distinct object_id FROM $wpdb->term_relationships WHERE term_taxonomy_id IN ('". implode( "', '", $filter_taxonomy_a ) . "') )";
+				}
+				else {
+					$query_objects .= " AND term_taxonomy_id IN ('". implode( "', '", $filter_taxonomy_a ) . "')";
+				}
+			}
+
+			$relationships = $wpdb->get_results( $query_objects );
+			$related_objects = array();
+			if ( count( $relationships ) > 0 ) {
+				foreach ($relationships as $item)
+					$related_objects[] = $item->object_id;
+			}
+		}
+
 		$query = "SELECT distinct ID FROM $wpdb->posts ";
-		$where = " WHERE post_type = 'post' AND post_status = 'publish' AND ID<>" . $id; // not the current post
+		$where = " WHERE post_type = '" . $post_type . "' AND post_status = 'publish' AND ID<>" . $id; // not the current post
 		$startdate = get_option( 'relpoststh_startdate' );
 		if ( !empty( $startdate ) && preg_match( '/^\d\d\d\d-\d\d-\d\d$/', $startdate ) ) { // If startdate was set
 			$debug .= "Startdate: $startdate;";
 			$where .= " AND post_date >= '" . $startdate . "'";
 		}
+		if ( $use_filter ) {
+			$where .= " AND ID IN ('". implode( "', '", $related_objects ) . "')";
+		}
+		$join = "";
+		if ( $onlywiththumbs ) {
+			$debug .= "Only with thumbnails;";
+			$join = " INNER JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)";
+			$where .= " AND $wpdb->postmeta.meta_key = '_thumbnail_id'";			
+		}
 
-		/* Get taxonomy terms */
-		$join = '';
-		$whichterm = '';
-		$select_terms = array();
-		if ( $categories_show_all != '1') { // if only specific categories were selected
-			$select_terms = get_option( 'relpoststh_show_categories',
-										get_option( 'relpoststh_categories' ) );
-			if ( empty( $select_terms ) ) // if no categories were specified intentionally return nothing
-				return $this->finish_process( $output, $debug . 'No categories were selected;', $time );
-		}
-		$debug .= "Relation: $relation;";
-		if ( $relation != 'no' ) { // relation was set
-			if ( !empty( $select_terms ) ) { // intersect categories selected and post's
-				$debug .= 'With specified categories;';
-				if ( $relation == 'categories' || $relation == 'both' ) {
-					$object_terms = wp_get_object_terms( $id, array('category'), array( 'fields' => 'ids' ) );
-					if ( is_array( $object_terms ) && is_array( $select_terms ) )
-						$select_terms = array_intersect( $select_terms, $object_terms );
-				}
-				if ( $relation == 'tags' || $relation == 'both' ) {
-					$object_terms = wp_get_object_terms( $id, array( 'post_tag' ), array( 'fields' => 'ids' ) );
-					$select_terms = array_merge( $select_terms, $object_terms );
-				}
-			}
-			else { // all categories were selected just get everything
-				if ( $relation == 'categories' )
-					$taxonomy = array( 'category' );
-				elseif ( $relation == 'tags' )
-					$taxonomy = array( 'post_tag' );
-				else
-					$taxonomy = array( 'category', 'post_tag' );
-				$select_terms = wp_get_object_terms( $id, $taxonomy, array( 'fields' => 'ids' ) );
-			}
-			if ( !is_array( $select_terms ) || empty( $select_terms ) ) // no terms to get taxonomy
-				return $this->finish_process( $output, $debug . 'No taxonomy terms to get posts;', $time );
-		}
-		if ( !( $relation == 'no' && $categories_show_all == '1' ) ) { // skip join if no relation and show all
-			$join = " INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id) INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id) ";
-			$include_terms = "'" . implode( "', '", $select_terms ) . "'";
-			$whichterm = " AND $wpdb->term_taxonomy.term_id IN ($include_terms) ";
-		}
 		$order = " ORDER BY rand() LIMIT " . $posts_number;
-		$random_posts = $wpdb->get_results( $query . $join . $where . $whichterm . $order );
+		$random_posts = $wpdb->get_results( $query . $join . $where . $order );
 
 		/* Get posts by their IDs */
-		$posts_in = array();
-		if ( is_array( $random_posts ) && count( $random_posts ) ) {
-			foreach ( $random_posts as $random_post )
-				$posts_in[] = $random_post->ID;
+		if ( !is_array( $random_posts ) || count( $random_posts ) < 1 ) {
+			return $this->finish_process( $output, $debug . 'No posts matching relationships criteria;', $time );
 		}
-		$posts = array();
-		$q = new WP_Query;
-		$posts = $q->query( array( 'caller_get_posts' => true,
-								   'post__in' => $posts_in,
-								   'posts_per_page'   => $posts_number ) );
 
+		$posts_in = array();
+		foreach ($random_posts as $random_post)
+			$posts_in[] = $random_post->ID;
+		$query = "SELECT ID, post_content, post_excerpt, post_title FROM $wpdb->posts WHERE ID IN ('". implode( "', '", $posts_in ) . "')";
+		$posts = $wpdb->get_results( $query );
 		if ( ! ( is_array( $posts ) && count( $posts ) > 0 ) ) { // no posts
-			$debug .= 'No posts found';
+			$debug .= 'No posts found;';
 			return $this->finish_process( $output, $debug, $time );
 		}
 		else
@@ -191,13 +223,23 @@ class RelatedPostsThumbnails {
 		// rendering related posts HTML
 		if ( $show_top )
 			$output .= stripslashes( get_option( 'relpoststh_top_text', $this->top_text ) );
-		$output .= '<div style="clear: both"></div><div style="border: 0pt none ; margin: 0pt; padding: 0pt;">';
+		$relpoststh_output_style = get_option( 'relpoststh_output_style', $this->output_style );
+		$relpoststh_cleanhtml = get_option( 'relpoststh_cleanhtml', 0 );
+		$text_height = get_option( 'relpoststh_textblockheight', $this->text_block_height );
+		if ($relpoststh_output_style == 'list') {
+			$output .= '<ul id="related_posts_thumbnails"';
+			if (!$relpoststh_cleanhtml)
+				$output .= ' style="list-style-type:none; list-style-position: inside; padding: 0; margin:0"';
+			$output .= '>';
+		}
+		else
+			$output .= '<div style="clear: both"></div><div style="border: 0pt none ; margin: 0pt; padding: 0pt;">';
 		foreach( $posts as $post ) {
 			$image = '';
 			$url = '';
 			if ( $thsource == 'custom-field' ) {
 				$debug .= 'Using custom field;';
-				$url = get_post_meta( $post->ID, get_option( 'relpoststh_customfield', $this->custom_field ), true );
+				$url = $basic_url = get_post_meta( $post->ID, get_option( 'relpoststh_customfield', $this->custom_field ), true );
 				if (strpos($url, '/wp-content') !== false)
 					$url = substr($url, strpos($url, '/wp-content'));
 				$theme_resize_url = get_option( 'relpoststh_theme_resize_url', '' );
@@ -209,8 +251,8 @@ class RelatedPostsThumbnails {
 				if ( current_theme_supports( 'post-thumbnails' ) ) { // using built in Wordpress feature
 					$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
 					$debug .= 'Post-thumbnails enabled in theme;';
-					if ( $post_thumbnail_id !== false ) { // post has thumbnail
-						$debug .= 'Post has thumbnail;';
+					if ( !( empty( $post_thumbnail_id ) || $post_thumbnail_id === false ) ) { // post has thumbnail
+						$debug .= 'Post has thumbnail '.$post_thumbnail_id.';';
 						$debug .= 'Postthname: '.$poststhname.';';
 						$image = wp_get_attachment_image_src( $post_thumbnail_id, $poststhname );
 						$url = $image[0];
@@ -240,18 +282,18 @@ class RelatedPostsThumbnails {
 						}
 					}
 					else
-						$debug .= 'Found wrong formatted image;';
+						$debug .= 'Found wrong formatted image: '.$image.';';
 				}
+				$basic_url = $url;
 			}
-			
-			if (strpos($url, '/') === 0)
-			{
-				$debug .= 'Relative url: '.$url.';';
-				$url = get_bloginfo('url') . $url;
+
+			if ( strpos( $url, '/' ) === 0 ) {
+				$debug .= 'Relative url: ' . $url . ';';
+				$url = $basic_url = get_bloginfo( 'url' ) . $url;
 			}
 
 			$debug .= 'Image URL: '.$url.';';
-			if ( empty($url) || ( ini_get( 'allow_url_fopen' ) && false === @fopen( $url, 'r' ) ) ) { // parsed URL is empty or no file if can check
+			if ( empty( $basic_url ) ) { // parsed URL is empty or no file if can check
 				$debug .= 'Image is empty or no file. Using default image;';
 				$url = get_option( 'relpoststh_default_image', $this->default_image );
 			}
@@ -260,21 +302,46 @@ class RelatedPostsThumbnails {
 			$post_excerpt = ( empty( $post->post_excerpt ) ) ? $post->post_content : $post->post_excerpt;
 			$excerpt = $this->process_text_cut( $post_excerpt, $excerpt_length );
 
-			if ( !empty($title) && !empty($excerpt) ) {
+			if ( !empty( $title ) && !empty( $excerpt ) ) {
 				$title = '<b>' . $title . '</b>';
 				$excerpt = '<br/>' . $excerpt;
 			}
 
 			$debug .= 'Using title with size ' . $text_length . '. Using excerpt with size ' . $excerpt_length . ';';
-			$output .= '<a onmouseout="this.style.backgroundColor=\'' . get_option( 'relpoststh_background', $this->background ) . '\'" onmouseover="this.style.backgroundColor=\'' . get_option( 'relpoststh_hoverbackground', $this->hoverbackground ) . '\'" style="border-right: 1px solid ' . get_option( 'relpoststh_bordercolor', $this->border_color ) . '; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="' . get_permalink( $post->ID ) . '">';
-			$output .= '<div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: ' . $width . 'px; height: ' . ( $height + get_option( 'relpoststh_textblockheight', $this->text_block_height ) ) . 'px;">';
-			$output .= '<div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(' . $url . ') no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: ' . $width . 'px; height: ' . $height . 'px;"></div>';
-			$output .= '<div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ' . get_option( 'relpoststh_fontfamily', $this->font_family ) . '; font-style: normal; font-variant: normal; font-weight: normal; font-size: ' . get_option( 'relpoststh_fontsize', $this->font_size ) . 'px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: ' . get_option( 'relpoststh_fontcolor', $this->font_color ) . ';">' . $title . $excerpt . '</div>';
-			$output .= '</div>';
-			$output .= '</a>';
+			if ($relpoststh_output_style == 'list') {
+				$link = get_permalink( $post->ID );
+				$fontface = str_replace('"', "'", stripslashes( get_option( 'relpoststh_fontfamily', $this->font_family ) ) );
+				$output .= '<li ';
+				if ( !$relpoststh_cleanhtml )
+					$output .= ' style="float: left; padding: 0; margin:0; padding: 5px; display: block; border-right: 1px solid ' . get_option( 'relpoststh_bordercolor', $this->border_color ) . '; background-color: ' . get_option( 'relpoststh_background', $this->background ) . '" onmouseout="this.style.backgroundColor=\'' . get_option( 'relpoststh_background', $this->background ) . '\'" onmouseover="this.style.backgroundColor=\'' . get_option( 'relpoststh_hoverbackground', $this->hoverbackground ) . '\'"';
+				$output .= '>';
+				$output .= '<a href="' . $link . '" ><img alt="' . $title . '" src="' . $url . '" width="' . $width . '" height="' . $height . '" ';
+				if ( !$relpoststh_cleanhtml )
+					$output .= 'style="padding: 0px; margin: 0px; border: 0pt none;"';
+				$output .= '/></a>';
+				if ($text_height != '0')
+				{
+					$output .= '<a href="' . $link . '"';
+					if ( !$relpoststh_cleanhtml )
+						$output .= ' style="display: block; width: ' . $width . 'px; overflow: hidden;height: ' . $text_height . 'px; font-family: ' . $fontface . '; font-style: normal; font-variant: normal; font-weight: normal; font-size: ' . get_option( 'relpoststh_fontsize', $this->font_size ) . 'px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: ' . get_option( 'relpoststh_fontcolor', $this->font_color ) . ';text-decoration: none;"';
+					$output .= '><span>' . $title . $excerpt . '</span></a></li>';
+				}
+			}
+			else {
+				$output .= '<a onmouseout="this.style.backgroundColor=\'' . get_option( 'relpoststh_background', $this->background ) . '\'" onmouseover="this.style.backgroundColor=\'' . get_option( 'relpoststh_hoverbackground', $this->hoverbackground ) . '\'" style="background-color: ' . get_option( 'relpoststh_background', $this->background ) . '; border-right: 1px solid ' . get_option( 'relpoststh_bordercolor', $this->border_color ) . '; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="' . get_permalink( $post->ID ) . '">';
+				$output .= '<div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: ' . $width . 'px; height: ' . ( $height + $text_height ) . 'px;">';
+				$output .= '<div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(' . $url . ') no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: ' . $width . 'px; height: ' . $height . 'px;"></div>';
+				$output .= '<div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ' . $fontface . '; font-style: normal; font-variant: normal; font-weight: normal; font-size: ' . get_option( 'relpoststh_fontsize', $this->font_size ) . 'px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: ' . get_option( 'relpoststh_fontcolor', $this->font_color ) . ';">' . $title . $excerpt . '</div>';
+				$output .= '</div>';
+				$output .= '</a>';
+			}
 
 		} // end foreach
-		$output .= '</div><div style="clear: both"></div>';
+		if ($relpoststh_output_style == 'list')
+			$output .= '</ul>';
+		else
+			$output .= '</div>';
+		$output .= '<div style="clear: both"></div>';
 		return $this->finish_process( $output, $debug, $time );
 	}
 
@@ -292,13 +359,24 @@ class RelatedPostsThumbnails {
 		if ($length == 0)
 			return '';
 		else {
-			$text = strip_shortcodes( strip_tags( $text ) );
-			return ( ( strlen( $text ) > $length ) ? substr( $text, 0, $length) . '...' : $text );
+			$text = htmlspecialchars( strip_tags( strip_shortcodes( $text ) ) );
+			if ( function_exists('mb_strlen') ) {
+				return ( ( mb_strlen( $text ) > $length ) ? mb_substr( $text, 0, $length) . '...' : $text );
+			}
+			else {
+				return ( ( strlen( $text ) > $length ) ? substr( $text, 0, $length) . '...' : $text );
+			}
 		}
 	}
 
 	function is_relpoststh_show() { // Checking display options
-		if ( is_page() || ( ! is_single() && get_option( 'relpoststh_single_only', $this->single_only ) ) ) { // single only
+		if ( !is_single() && get_option( 'relpoststh_single_only', $this->single_only ) ) { // single only
+			return false;
+		}
+		/* Check post type */
+		$post_types = get_option( 'relpoststh_post_types', $this->post_types );
+		$post_type = get_post_type();
+		if ( !in_array($post_type, $post_types) ) {
 			return false;
 		}
 		/* Check categories */
@@ -321,7 +399,7 @@ class RelatedPostsThumbnails {
 	}
 
 	function admin_interface() { // Admin interface
-		if ( $_POST['action'] == 'update' ) {
+		if ( isset($_POST['action']) && ($_POST['action'] == 'update') ) {
 			if ( !current_user_can( 'manage_options' ) ) {
 				wp_die( __( 'No access', 'related-posts-thumbnails' ) );
 			}
@@ -334,10 +412,15 @@ class RelatedPostsThumbnails {
 					$error = __( 'Wrong date', 'related-posts-thumbnails' ) . ': ' . sprintf( '%d/%d/%d', $_POST['relpoststh_month'], $_POST['relpoststh_day'], $_POST['relpoststh_year'] );
 				}
 			}
-			else
+			else {
 				$set_date = '';
+			}
 			if ( $validation ) {
 				update_option( 'relpoststh_single_only', $_POST['relpoststh_single_only'] );
+				update_option( 'relpoststh_post_types', $_POST['relpoststh_post_types'] );
+				update_option( 'relpoststh_onlywiththumbs', $_POST['onlywiththumbs'] );
+				update_option( 'relpoststh_output_style', $_POST['relpoststh_output_style'] );
+				update_option( 'relpoststh_cleanhtml', $_POST['relpoststh_cleanhtml'] );
 				update_option( 'relpoststh_auto', $_POST['relpoststh_auto'] );
 				update_option( 'relpoststh_top_text', $_POST['relpoststh_top_text'] );
 				update_option( 'relpoststh_number', $_POST['relpoststh_number'] );
@@ -364,6 +447,7 @@ class RelatedPostsThumbnails {
 				update_option( 'relpoststh_show_categories', $_POST['relpoststh_show_categories'] );
 				update_option( 'relpoststh_devmode', $_POST['relpoststh_devmode'] );
 				update_option( 'relpoststh_startdate', $set_date );
+				update_option( 'relpoststh_custom_taxonomies', $_POST['relpoststh_custom_taxonomies'] );
 				echo "<div class='updated fade'><p>" . __( 'Settings updated', 'related-posts-thumbnails' ) ."</p></div>";
 			}
 			else {
@@ -379,6 +463,7 @@ class RelatedPostsThumbnails {
 		}
 		$relpoststh_single_only = get_option( 'relpoststh_single_only', $this->single_only );
 		$relpoststh_auto = get_option( 'relpoststh_auto', $this->auto );
+		$relpoststh_cleanhtml = get_option( 'relpoststh_cleanhtml', 0 );
 		$relpoststh_relation = get_option( 'relpoststh_relation', $this->relation );
 		$relpoststh_thsource = get_option( 'relpoststh_thsource', $this->thsource );
 		$relpoststh_devmode = get_option( 'relpoststh_devmode', $this->devmode );
@@ -386,9 +471,33 @@ class RelatedPostsThumbnails {
 		$relpoststh_categories = get_option( 'relpoststh_categories' );
 		$relpoststh_show_categories = get_option( 'relpoststh_show_categories', get_option( 'relpoststh_categories' ) );
 		$relpoststh_show_categoriesall = get_option( 'relpoststh_show_categoriesall', $relpoststh_categoriesall );
+		$onlywiththumbs = get_option( 'relpoststh_onlywiththumbs', false );
 		$relpoststh_startdate = explode( '-', get_option( 'relpoststh_startdate' ) );
-		$thsources = array( 'post-thumbnails' => 'Post thumbnails', 'custom-field' => 'Custom field' );
+		$relpoststh_output_style = get_option( 'relpoststh_output_style', $this->output_style );
+		$thsources = array( 'post-thumbnails' => __('Post thumbnails', 'related_posts_thumbnails'), 'custom-field' => __('Custom field', 'related_posts_thumbnails') );
 		$categories = get_categories();
+		if ($this->wp_version >= 3)
+		{
+			$post_types = get_post_types( array( 'public' => 1 ) );
+		}
+		else
+		{
+			$post_types = get_post_types();
+		}
+		$relpoststh_post_types = get_option( 'relpoststh_post_types', $this->post_types );
+		$output_styles = array('div' => __( 'Blocks', 'related-posts-thumbnails' ), 'list' => __( 'List', 'related-posts-thumbnails' ) );
+		$relation_options = array('categories' => __('Categories', 'related-posts-thumbnails'), 'tags' => __('Tags', 'related-posts-thumbnails'), 'both' => __('Categories and Tags', 'related-posts-thumbnails'), 'no' => __('Random', 'related-posts-thumbnails'), 'custom' => __('Custom', 'related-posts-thumbnails') );
+		if ($this->wp_version >= 3)
+		{
+			$custom_taxonomies = get_taxonomies( array('public' => 1) );
+			$relpoststh_custom_taxonomies = get_option( 'relpoststh_custom_taxonomies', $this->custom_taxonomies );
+			if (!is_array($relpoststh_custom_taxonomies))
+				$relpoststh_custom_taxonomies = array();
+		}
+		else 
+		{
+			$relation_options['custom'] .= ' '. __('(This option is available for WP v3+ only)', 'related_posts_thumbnails');
+		}
 		?>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
@@ -408,6 +517,22 @@ class RelatedPostsThumbnails {
 			else {
 				$('#relpoststh-post-thumbnails').hide();
 				$('#relpoststh-custom-field').show();
+			}
+		});
+		$('#relpoststh_output_style').change(function(){
+			if (this.value == 'list') {
+				$('#relpoststh_cleanhtml').show();
+			}
+			else {
+				$('#relpoststh_cleanhtml').hide();
+			}
+		});
+		$("input[name='relpoststh_relation']").change(function(){
+			if ($("input[name='relpoststh_relation']:checked").val() == 'custom') {
+				$('#custom_taxonomies').show();
+			}
+			else {
+				$('#custom_taxonomies').hide();
 			}
 		});
 	});
@@ -444,6 +569,17 @@ class RelatedPostsThumbnails {
 						</td>
 					</tr>
 					<tr valign="top">
+						<th scope="row"><?php _e( 'Post types', 'related-posts-thumbnails' ); ?>:</th>
+						<td>
+							<?php if ( is_array($post_types) && count($post_types) ): ?>
+							<?php foreach ($post_types as $post_type): ?>
+							<input type="checkbox" name="relpoststh_post_types[]" id="pt_<?php echo $post_type; ?>" value="<?php echo $post_type; ?>" <?php if ( in_array( $post_type, $relpoststh_post_types ) ) echo 'checked="checked"'; ?>/>
+							<label for="pt_<?php echo $post_type; ?>"><?php echo $post_type; ?></label>
+							<?php endforeach; ?>
+							<?php endif; ?>
+						</td>
+					</tr>
+					<tr valign="top">
 						<th scope="row"><?php _e( 'Categories on which related thumbnails will appear', 'related-posts-thumbnails' ); ?>:</th>
 						<td>
 							<?php $this->display_categories_list( $relpoststh_categoriesall, $categories, $relpoststh_categories, 'relpoststh_categoriesall', 'relpoststh_categories' ); ?>
@@ -458,8 +594,7 @@ class RelatedPostsThumbnails {
 					<tr>
 						<th scope="row"><?php _e( 'Include only posts after', 'related-posts-thumbnails' ); ?>:</th>
 						<td>
-							<?php _e( 'Year' ); ?>: <input type="text" name="relpoststh_year" size="4" value="<?php echo $relpoststh_startdate[0]; ?>"> <?php _e( 'Month' ); ?>: <input type="text" name="relpoststh_month" size="2" value="<?php echo $relpoststh_startdate[1]; ?>"> <?php _e( 'Day' ); ?>: <input type="text" name="relpoststh_day" size="2" value="<?php echo $relpoststh_startdate[2]; ?>"> <label for="relpoststh_excerptlength"><?php _e( 'Leave empty for all posts dates', 'related-posts-thumbnails' ); ?></label><br />
-
+							<?php _e( 'Year', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_year" size="4" value="<?php if (isset($relpoststh_startdate[0])) echo $relpoststh_startdate[0]; ?>"> <?php _e( 'Month', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_month" size="2" value="<?php if (isset($relpoststh_startdate[1])) echo $relpoststh_startdate[1]; ?>"> <?php _e( 'Day', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_day" size="2" value="<?php if (isset($relpoststh_startdate[2])) echo $relpoststh_startdate[2]; ?>"> <label for="relpoststh_excerptlength"><?php _e( 'Leave empty for all posts dates', 'related-posts-thumbnails' ); ?></label><br />
 						</td>
 					</tr>
 					<tr>
@@ -508,6 +643,15 @@ class RelatedPostsThumbnails {
 							<?php endif; ?>
 						</td>
 					</tr>
+					<?php if ( current_theme_supports( 'post-thumbnails' ) ): ?>
+					<tr>
+						<th scope="row"><?php _e( 'Show posts only with thumbnails', 'related-posts-thumbnails' ); ?>:</th>
+						<td>
+							<input type="checkbox" name="onlywiththumbs" id="onlywiththumbs" value="1" <?php if ( $onlywiththumbs ) echo 'checked="checked"'; ?>/>
+							<label for="onlywiththumbs"><?php _e( 'Only posts with assigned Featured Image', 'related-posts-thumbnails' ); ?></label><br />
+						</td>
+					</tr>
+					<?php endif; ?>
 				</table>
 			</div>
 			<div class="postbox" id="relpoststh-custom-field" <?php if ( $relpoststh_thsource != 'custom-field' ) : ?> style="display:none" <?php endif; ?>>
@@ -538,6 +682,17 @@ class RelatedPostsThumbnails {
 			<div class="postbox">
 				<h3><?php _e( 'Style options', 'related-posts-thumbnails' ); ?>:</h3>
 				<table class="form-table">
+					<tr>
+						<th scope="row"><?php _e( 'Output style', 'related-posts-thumbnails' ); ?>:</th>
+						<td>
+							<select name="relpoststh_output_style"  id="relpoststh_output_style">
+								<?php foreach ( $output_styles as $name => $title ) : ?>
+								<option value="<?php echo $name; ?>" <?php if ( $relpoststh_output_style == $name ) echo 'selected'; ?>><?php echo $title; ?></option>
+								<?php endforeach; ?>
+							</select>
+							<span id="relpoststh_cleanhtml" style="display: <?php if ($relpoststh_output_style == 'list') echo 'inline'; else echo 'none';?>;"><?php _e( 'Turn off plugin styles', 'related-posts-thumbnails' ); ?> <input type="checkbox" name="relpoststh_cleanhtml" <?php if ( $relpoststh_cleanhtml ) echo 'checked="checked"'; ?> /></span>
+						</td>
+					</tr>
 					<tr valign="top">
 						<th scope="row"><?php _e( 'Background color', 'related-posts-thumbnails' ); ?>:</th>
 						<td>
@@ -565,7 +720,7 @@ class RelatedPostsThumbnails {
 					<tr valign="top">
 						<th scope="row"><?php _e( 'Font family', 'related-posts-thumbnails' ); ?>:</th>
 						<td>
-							<input type="text" name="relpoststh_fontfamily" value="<?php echo get_option( 'relpoststh_fontfamily', $this->font_family )?>" size="50"/>
+							<input type="text" name="relpoststh_fontfamily" value="<?php echo stripslashes( htmlspecialchars( get_option( 'relpoststh_fontfamily', $this->font_family ) ) ); ?>" size="50"/>
 						</td>
 					</tr>
 					<tr valign="top">
@@ -602,14 +757,20 @@ class RelatedPostsThumbnails {
 					<tr valign="top">
 						<th scope="row"><?php _e( 'Relation based on', 'related-posts-thumbnails' ); ?>:</th>
 						<td>
-							<input type="radio" name="relpoststh_relation" id="relpoststh_relation_categories" value="categories" <?php if ( $relpoststh_relation == 'categories' ) echo 'checked="checked"'; ?>/>
-							<label for="relpoststh_relation_categories"><?php _e( 'Categories', 'related-posts-thumbnails' ); ?></label><br />
-							<input type="radio" name="relpoststh_relation" id="relpoststh_relation_tags" value="tags" <?php if ( $relpoststh_relation == 'tags' ) echo 'checked="checked"'; ?>/>
-							<label for="relpoststh_relation_tags"><?php _e( 'Tags', 'related-posts-thumbnails' ); ?></label><br />
-							<input type="radio" name="relpoststh_relation" id="relpoststh_relation_both" value="both" <?php if ( $relpoststh_relation == 'both' ) echo 'checked="checked"'; ?>/>
-							<label for="relpoststh_relation_both"><?php _e( 'Categories and Tags', 'related-posts-thumbnails' ); ?></label><br />
-							<input type="radio" name="relpoststh_relation" id="relpoststh_relation_no" value="no" <?php if ( $relpoststh_relation == 'no' ) echo 'checked="checked"'; ?>/>
-							<label for="relpoststh_relation_no"><?php _e( 'Random', 'related-posts-thumbnails' ); ?></label><br />
+							<?php if (is_array($relation_options) && count($relation_options)): ?>
+							<?php foreach ($relation_options as $ro_key => $ro_name): ?>
+							<input type="radio" name="relpoststh_relation" id="relpoststh_relation_<?php echo $ro_key; ?>" value="<?php echo $ro_key; ?>" <?php if ( $relpoststh_relation == $ro_key ) echo 'checked="checked"'; ?>/>
+							<label for="relpoststh_relation_<?php echo $ro_key; ?>"><?php echo $ro_name; ?></label><br />
+							<?php endforeach; ?>
+							<?php endif; ?>
+							<div id="custom_taxonomies" style="display: <?php if ($relpoststh_relation == 'custom') echo 'inline'; else echo 'none';?>;">
+								<?php if (is_array($custom_taxonomies) && count($custom_taxonomies)): ?>
+								<?php foreach ($custom_taxonomies as $custom_taxonomy): ?>
+								<input type="checkbox" name="relpoststh_custom_taxonomies[]" id="ct_<?php echo $custom_taxonomy; ?>" value="<?php echo $custom_taxonomy; ?>" <?php if ( in_array( $custom_taxonomy, $relpoststh_custom_taxonomies ) ) echo 'checked="checked"'; ?>/>
+								<label for="ct_<?php echo $custom_taxonomy; ?>"><?php echo $custom_taxonomy; ?></label>
+								<?php endforeach; ?>
+								<?php endif; ?>
+							</div>
 						</td>
 					</tr>
 				</table>

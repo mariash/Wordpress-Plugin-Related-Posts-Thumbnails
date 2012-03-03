@@ -1,21 +1,23 @@
+# Russian translation of Related-Posts-Thubmnails plugin
+# Copyright (C) 2010 M.I.Shaldybina
+# This file is distributed under the same license as the Related-Posts-Thubmnails package.
+# Maria Shaldybina <mary@shaldybina.com>, 2010
 msgid ""
 msgstr ""
-"Project-Id-Version: Related Posts Thumbnails in italiano\n"
+"Project-Id-Version: Related Posts Thubmnails 1.2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-05-19 17:17-0700\n"
-"PO-Revision-Date: 2010-11-26 12:26+0100\n"
-"Last-Translator: Gianni Diurno (aka gidibao) <gidibao[at]gmail[dot]com>\n"
-"Language-Team: Gianni Diurno | gidibao.net <gidibao[at]gmail[dot]com>\n"
+"PO-Revision-Date: 2010-10-02 13:20+0200\n"
+"Last-Translator: Ali Hikmet Küpeli <ramseszz@msn.com>\n"
+"Language-Team: tr_TR <www.kuzublog.com>\n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: __;_e;esc_attr__;esc_attr_e;esc_html__;esc_html_e\n"
-"X-Poedit-Language: Italian\n"
-"X-Poedit-Country: ITALY\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-SearchPath-0: .\n"
 
 #: related-posts-thumbnails.php:148
 #: related-posts-thumbnails.php:194
@@ -25,9 +27,8 @@ msgstr ""
 #: related-posts-thumbnails.php:308
 #: related-posts-thumbnails.php:311
 #: related-posts-thumbnails.php:354
-#: related-posts-thumbnails.php:378
 msgid "Related Posts Thumbnails"
-msgstr "Related Posts Thumbnails"
+msgstr ""
 
 #: related-posts-thumbnails.php:148
 #: related-posts-thumbnails.php:194
@@ -37,9 +38,8 @@ msgstr "Related Posts Thumbnails"
 #: related-posts-thumbnails.php:308
 #: related-posts-thumbnails.php:311
 #: related-posts-thumbnails.php:354
-#: related-posts-thumbnails.php:378
 msgid "Related Posts Thumbs"
-msgstr "Related Posts Thumbs"
+msgstr ""
 
 #: related-posts-thumbnails.php:154
 #: related-posts-thumbnails.php:200
@@ -49,9 +49,8 @@ msgstr "Related Posts Thumbs"
 #: related-posts-thumbnails.php:314
 #: related-posts-thumbnails.php:317
 #: related-posts-thumbnails.php:360
-#: related-posts-thumbnails.php:384
 msgid "No access"
-msgstr "Nessun accesso"
+msgstr "Erişim sağlanamadı"
 
 #: related-posts-thumbnails.php:170
 #: related-posts-thumbnails.php:222
@@ -61,9 +60,8 @@ msgstr "Nessun accesso"
 #: related-posts-thumbnails.php:354
 #: related-posts-thumbnails.php:358
 #: related-posts-thumbnails.php:403
-#: related-posts-thumbnails.php:428
 msgid "Settings updated"
-msgstr "Le impostazioni sono state aggiornate"
+msgstr "Ayarlar güncellendi"
 
 #: related-posts-thumbnails.php:182
 #: related-posts-thumbnails.php:239
@@ -73,9 +71,8 @@ msgstr "Le impostazioni sono state aggiornate"
 #: related-posts-thumbnails.php:404
 #: related-posts-thumbnails.php:408
 #: related-posts-thumbnails.php:464
-#: related-posts-thumbnails.php:490
 msgid "Related Posts Thumbnails Settings"
-msgstr "Impostazioni Related Posts Thumbnails"
+msgstr "Resimli Benzer Yazılar Eklenti Ayarları"
 
 #: related-posts-thumbnails.php:188
 #: related-posts-thumbnails.php:245
@@ -85,13 +82,12 @@ msgstr "Impostazioni Related Posts Thumbnails"
 #: related-posts-thumbnails.php:410
 #: related-posts-thumbnails.php:414
 #: related-posts-thumbnails.php:470
-#: related-posts-thumbnails.php:496
 msgid "General Display Options"
-msgstr "Opzioni generali visualizzazione"
+msgstr "Genel Ayarlar"
 
 #: related-posts-thumbnails.php:191
 msgid "Display options"
-msgstr "Opzioni visualizzazione"
+msgstr "Görüntüleme Seçenekleri"
 
 #: related-posts-thumbnails.php:194
 #: related-posts-thumbnails.php:251
@@ -101,9 +97,8 @@ msgstr "Opzioni visualizzazione"
 #: related-posts-thumbnails.php:430
 #: related-posts-thumbnails.php:434
 #: related-posts-thumbnails.php:490
-#: related-posts-thumbnails.php:516
 msgid "Show on single posts only"
-msgstr "mostra solamente negli articoli singoli"
+msgstr "Sadece yazılara dahil et"
 
 #: related-posts-thumbnails.php:198
 #: related-posts-thumbnails.php:280
@@ -113,9 +108,8 @@ msgstr "mostra solamente negli articoli singoli"
 #: related-posts-thumbnails.php:453
 #: related-posts-thumbnails.php:457
 #: related-posts-thumbnails.php:513
-#: related-posts-thumbnails.php:539
 msgid "Top text"
-msgstr "Testo principale"
+msgstr "Üst başlık"
 
 #: related-posts-thumbnails.php:204
 #: related-posts-thumbnails.php:286
@@ -125,9 +119,8 @@ msgstr "Testo principale"
 #: related-posts-thumbnails.php:459
 #: related-posts-thumbnails.php:463
 #: related-posts-thumbnails.php:519
-#: related-posts-thumbnails.php:545
 msgid "Number of similar posts to display"
-msgstr "Numero articoli da mostrare"
+msgstr "Kaçtane benzer yazı gösterilsin"
 
 #: related-posts-thumbnails.php:212
 #: related-posts-thumbnails.php:360
@@ -137,9 +130,8 @@ msgstr "Numero articoli da mostrare"
 #: related-posts-thumbnails.php:519
 #: related-posts-thumbnails.php:530
 #: related-posts-thumbnails.php:586
-#: related-posts-thumbnails.php:621
 msgid "Style options"
-msgstr "Opzioni stile"
+msgstr "Görünüm Seçenekleri"
 
 #: related-posts-thumbnails.php:215
 #: related-posts-thumbnails.php:363
@@ -149,9 +141,8 @@ msgstr "Opzioni stile"
 #: related-posts-thumbnails.php:522
 #: related-posts-thumbnails.php:533
 #: related-posts-thumbnails.php:600
-#: related-posts-thumbnails.php:635
 msgid "Background color"
-msgstr "Colore sfondo"
+msgstr "Arkaplan rengi"
 
 #: related-posts-thumbnails.php:221
 #: related-posts-thumbnails.php:369
@@ -161,9 +152,8 @@ msgstr "Colore sfondo"
 #: related-posts-thumbnails.php:528
 #: related-posts-thumbnails.php:539
 #: related-posts-thumbnails.php:606
-#: related-posts-thumbnails.php:641
 msgid "Background color on mouse over"
-msgstr "Colore sfondo (hoover)"
+msgstr "Fare üzerine getirildiğinde görünecek arkaplan rengi"
 
 #: related-posts-thumbnails.php:227
 #: related-posts-thumbnails.php:375
@@ -173,9 +163,8 @@ msgstr "Colore sfondo (hoover)"
 #: related-posts-thumbnails.php:534
 #: related-posts-thumbnails.php:545
 #: related-posts-thumbnails.php:612
-#: related-posts-thumbnails.php:647
 msgid "Border color"
-msgstr "Colore bordo"
+msgstr "Kenar çizgilerin rengi"
 
 #: related-posts-thumbnails.php:233
 #: related-posts-thumbnails.php:381
@@ -185,9 +174,8 @@ msgstr "Colore bordo"
 #: related-posts-thumbnails.php:540
 #: related-posts-thumbnails.php:551
 #: related-posts-thumbnails.php:618
-#: related-posts-thumbnails.php:653
 msgid "Font color"
-msgstr "Colore carattere"
+msgstr "Font rengi"
 
 #: related-posts-thumbnails.php:239
 #: related-posts-thumbnails.php:387
@@ -197,9 +185,8 @@ msgstr "Colore carattere"
 #: related-posts-thumbnails.php:546
 #: related-posts-thumbnails.php:557
 #: related-posts-thumbnails.php:624
-#: related-posts-thumbnails.php:659
 msgid "Font family"
-msgstr "Tipo carattere"
+msgstr "Font türü"
 
 #: related-posts-thumbnails.php:245
 #: related-posts-thumbnails.php:393
@@ -209,9 +196,8 @@ msgstr "Tipo carattere"
 #: related-posts-thumbnails.php:552
 #: related-posts-thumbnails.php:563
 #: related-posts-thumbnails.php:630
-#: related-posts-thumbnails.php:665
 msgid "Font size"
-msgstr "Dimensione carattere"
+msgstr "Font büyüklüğü"
 
 #: related-posts-thumbnails.php:251
 #: related-posts-thumbnails.php:399
@@ -221,9 +207,8 @@ msgstr "Dimensione carattere"
 #: related-posts-thumbnails.php:558
 #: related-posts-thumbnails.php:569
 #: related-posts-thumbnails.php:636
-#: related-posts-thumbnails.php:671
 msgid "Text maximum length"
-msgstr "Lunghezza massima testo"
+msgstr "Maksimum başlık uzunluğu"
 
 #: related-posts-thumbnails.php:259
 #: related-posts-thumbnails.php:407
@@ -233,9 +218,8 @@ msgstr "Lunghezza massima testo"
 #: related-posts-thumbnails.php:580
 #: related-posts-thumbnails.php:591
 #: related-posts-thumbnails.php:658
-#: related-posts-thumbnails.php:693
 msgid "Relation Builder Options"
-msgstr "Opzioni generatore relazioni"
+msgstr "Benzer Yazı Seçim Ayarları"
 
 #: related-posts-thumbnails.php:262
 #: related-posts-thumbnails.php:410
@@ -245,9 +229,8 @@ msgstr "Opzioni generatore relazioni"
 #: related-posts-thumbnails.php:583
 #: related-posts-thumbnails.php:594
 #: related-posts-thumbnails.php:661
-#: related-posts-thumbnails.php:696
 msgid "Relation based on"
-msgstr "Relazione basata su"
+msgstr "Benzer yazıları şuna göre belirle"
 
 #: related-posts-thumbnails.php:265
 #: related-posts-thumbnails.php:255
@@ -261,9 +244,8 @@ msgstr "Relazione basata su"
 #: related-posts-thumbnails.php:586
 #: related-posts-thumbnails.php:597
 #: related-posts-thumbnails.php:664
-#: related-posts-thumbnails.php:699
 msgid "Categories"
-msgstr "Categorie"
+msgstr "Kategoriler"
 
 #: related-posts-thumbnails.php:267
 #: related-posts-thumbnails.php:415
@@ -273,9 +255,8 @@ msgstr "Categorie"
 #: related-posts-thumbnails.php:588
 #: related-posts-thumbnails.php:599
 #: related-posts-thumbnails.php:666
-#: related-posts-thumbnails.php:701
 msgid "Tags"
-msgstr "Tag"
+msgstr "Etiketler"
 
 #: related-posts-thumbnails.php:269
 #: related-posts-thumbnails.php:417
@@ -285,13 +266,12 @@ msgstr "Tag"
 #: related-posts-thumbnails.php:590
 #: related-posts-thumbnails.php:601
 #: related-posts-thumbnails.php:668
-#: related-posts-thumbnails.php:703
 msgid "Categories and Tags"
-msgstr "Categorie e tag"
+msgstr "Kategoriler ve Etiketler"
 
 #: related-posts-thumbnails.php:275
 msgid "Thumbnails options"
-msgstr "Opzioni miniature"
+msgstr "Küçükresim (thumbnails) ayarları"
 
 #: related-posts-thumbnails.php:278
 #: related-posts-thumbnails.php:327
@@ -301,9 +281,8 @@ msgstr "Opzioni miniature"
 #: related-posts-thumbnails.php:486
 #: related-posts-thumbnails.php:490
 #: related-posts-thumbnails.php:546
-#: related-posts-thumbnails.php:572
 msgid "Post-thumbnails name"
-msgstr "Nome miniature articolo"
+msgstr "Yazılarda kullanılan küçükresim adını yazın"
 
 #: related-posts-thumbnails.php:286
 #: related-posts-thumbnails.php:335
@@ -313,9 +292,8 @@ msgstr "Nome miniature articolo"
 #: related-posts-thumbnails.php:494
 #: related-posts-thumbnails.php:498
 #: related-posts-thumbnails.php:554
-#: related-posts-thumbnails.php:580
 msgid "Your theme has to support post-thumbnails to have more choices"
-msgstr "attiva la funzione post-thumbnails per incrementare il numero delle scelte disponibili"
+msgstr "Temanız pos-thumbnails özelliğini desteklemelidir"
 
 #: related-posts-thumbnails.php:291
 #: related-posts-thumbnails.php:292
@@ -325,9 +303,8 @@ msgstr "attiva la funzione post-thumbnails per incrementare il numero delle scel
 #: related-posts-thumbnails.php:465
 #: related-posts-thumbnails.php:469
 #: related-posts-thumbnails.php:525
-#: related-posts-thumbnails.php:551
 msgid "Default image URL"
-msgstr "URL immagine predefinita"
+msgstr "Varsayılan küçükresim adresi"
 
 #: related-posts-thumbnails.php:299
 #: related-posts-thumbnails.php:422
@@ -337,9 +314,8 @@ msgstr "URL immagine predefinita"
 #: related-posts-thumbnails.php:597
 #: related-posts-thumbnails.php:608
 #: related-posts-thumbnails.php:675
-#: related-posts-thumbnails.php:710
 msgid "Save Changes"
-msgstr "Salva le modifiche"
+msgstr "Değişiklikleri Kaydet"
 
 #: related-posts-thumbnails.php:248
 #: related-posts-thumbnails.php:297
@@ -348,9 +324,8 @@ msgstr "Salva le modifiche"
 #: related-posts-thumbnails.php:427
 #: related-posts-thumbnails.php:431
 #: related-posts-thumbnails.php:487
-#: related-posts-thumbnails.php:513
 msgid "Page type"
-msgstr "Tipo di pagina"
+msgstr "Sayfa Kaynağı"
 
 #: related-posts-thumbnails.php:270
 #: related-posts-thumbnails.php:319
@@ -359,9 +334,8 @@ msgstr "Tipo di pagina"
 #: related-posts-thumbnails.php:608
 #: related-posts-thumbnails.php:619
 #: related-posts-thumbnails.php:686
-#: related-posts-thumbnails.php:721
 msgid "All"
-msgstr "tutte"
+msgstr "Tümü"
 
 #: related-posts-thumbnails.php:298
 #: related-posts-thumbnails.php:324
@@ -384,11 +358,8 @@ msgstr "tutte"
 #: related-posts-thumbnails.php:531
 #: related-posts-thumbnails.php:543
 #: related-posts-thumbnails.php:561
-#: related-posts-thumbnails.php:557
-#: related-posts-thumbnails.php:569
-#: related-posts-thumbnails.php:596
 msgid "Thumbnails source"
-msgstr "Sorgente miniature"
+msgstr "Küçükresim kaynağı"
 
 #: related-posts-thumbnails.php:345
 #: related-posts-thumbnails.php:394
@@ -397,9 +368,8 @@ msgstr "Sorgente miniature"
 #: related-posts-thumbnails.php:504
 #: related-posts-thumbnails.php:508
 #: related-posts-thumbnails.php:564
-#: related-posts-thumbnails.php:599
 msgid "Custom field name"
-msgstr "Nome campo personalizzato"
+msgstr "Özel seçin adı"
 
 #: related-posts-thumbnails.php:351
 #: related-posts-thumbnails.php:400
@@ -408,9 +378,8 @@ msgstr "Nome campo personalizzato"
 #: related-posts-thumbnails.php:510
 #: related-posts-thumbnails.php:514
 #: related-posts-thumbnails.php:570
-#: related-posts-thumbnails.php:605
 msgid "Size"
-msgstr "Dimensione"
+msgstr "Büyüklük"
 
 #: related-posts-thumbnails.php:353
 #: related-posts-thumbnails.php:402
@@ -419,9 +388,8 @@ msgstr "Dimensione"
 #: related-posts-thumbnails.php:512
 #: related-posts-thumbnails.php:516
 #: related-posts-thumbnails.php:572
-#: related-posts-thumbnails.php:607
 msgid "Width"
-msgstr "larghezza"
+msgstr "Genişlik"
 
 #: related-posts-thumbnails.php:354
 #: related-posts-thumbnails.php:403
@@ -430,9 +398,8 @@ msgstr "larghezza"
 #: related-posts-thumbnails.php:513
 #: related-posts-thumbnails.php:517
 #: related-posts-thumbnails.php:573
-#: related-posts-thumbnails.php:608
 msgid "Height"
-msgstr "altezza"
+msgstr "Yükseklik"
 
 #: related-posts-thumbnails.php:426
 #: related-posts-thumbnails.php:483
@@ -441,9 +408,8 @@ msgstr "altezza"
 #: related-posts-thumbnails.php:601
 #: related-posts-thumbnails.php:612
 #: related-posts-thumbnails.php:679
-#: related-posts-thumbnails.php:714
 msgid "If you experience some problems with this plugin please let me know about it on <a href=\"http://wordpress.shaldybina.com/plugins/related-posts-thumbnails/\">Plugin's homepage</a>. If you think this plugin is awesome please vote on <a href=\"http://wordpress.org/extend/plugins/related-posts-thumbnails/\">Wordpress plugin page</a>. Thanks!"
-msgstr "Nel caso in cui avessi riscontrato dei problemi con questo plugin, invia il tuo feedback nella <a href=\"http://wordpress.shaldybina.com/plugins/related-posts-thumbnails/\">homepage</a> del plugin. Esprimi la tua valutazione nella <a href=\"http://wordpress.org/extend/plugins/related-posts-thumbnails/\">pagina del plugin su Wordpress</a>. Grazie!"
+msgstr "Eklenti konusunda sorun ve görüşleriniz için <a href=\"http://wordpress.shaldybina.com/plugins/related-posts-thumbnails/\">Plugin's homepage</a> adresini ziyaret edebilirsiniz. Eklentiyi beğendiyseniz lütfen <a href=\"http://wordpress.org/extend/plugins/related-posts-thumbnails/\">Wordpress plugin page</a>  sayfasını ziyaret ederek oy kullanın. Teşekkürler!"
 
 #: related-posts-thumbnails.php:290
 #: related-posts-thumbnails.php:292
@@ -451,9 +417,8 @@ msgstr "Nel caso in cui avessi riscontrato dei problemi con questo plugin, invia
 #: related-posts-thumbnails.php:413
 #: related-posts-thumbnails.php:417
 #: related-posts-thumbnails.php:473
-#: related-posts-thumbnails.php:499
 msgid "Automatically append to the post content"
-msgstr "Aggiungi in automatico"
+msgstr "Eklenti kodu otomatik olarak eklensin"
 
 #: related-posts-thumbnails.php:293
 #: related-posts-thumbnails.php:295
@@ -461,9 +426,8 @@ msgstr "Aggiungi in automatico"
 #: related-posts-thumbnails.php:416
 #: related-posts-thumbnails.php:420
 #: related-posts-thumbnails.php:476
-#: related-posts-thumbnails.php:502
 msgid "Or use <b>&lt;?php get_related_posts_thumbnails(); ?&gt;</b> in the Loop"
-msgstr "oppure inserisci <b>&lt;?php get_related_posts_thumbnails(); ?&gt;</b> nel Loop"
+msgstr "Veya <b> <?php get_related_posts_thumbnails(); ?> </b>  konudu kendiniz ekleyebilirsiniz"
 
 #: related-posts-thumbnails.php:451
 #: related-posts-thumbnails.php:453
@@ -471,9 +435,8 @@ msgstr "oppure inserisci <b>&lt;?php get_related_posts_thumbnails(); ?&gt;</b> n
 #: related-posts-thumbnails.php:561
 #: related-posts-thumbnails.php:572
 #: related-posts-thumbnails.php:639
-#: related-posts-thumbnails.php:674
 msgid "Set 0 for no title"
-msgstr "imposta a 0 per nessun titolo"
+msgstr "0 seçerseniz yazı başlıkları görüntülenmez"
 
 #: related-posts-thumbnails.php:455
 #: related-posts-thumbnails.php:457
@@ -481,9 +444,8 @@ msgstr "imposta a 0 per nessun titolo"
 #: related-posts-thumbnails.php:565
 #: related-posts-thumbnails.php:576
 #: related-posts-thumbnails.php:643
-#: related-posts-thumbnails.php:678
 msgid "Excerpt maximum length"
-msgstr "Lunghezza massima estratto"
+msgstr "Maksimum açıklama uzunluğu"
 
 #: related-posts-thumbnails.php:458
 #: related-posts-thumbnails.php:460
@@ -491,9 +453,8 @@ msgstr "Lunghezza massima estratto"
 #: related-posts-thumbnails.php:568
 #: related-posts-thumbnails.php:579
 #: related-posts-thumbnails.php:646
-#: related-posts-thumbnails.php:681
 msgid "Set 0 for no excerpt"
-msgstr "imposta a 0 per nessun estratto"
+msgstr "0 seçerseniz yazı açıklama kısımları görüntülenmez"
 
 #: related-posts-thumbnails.php:530
 #: related-posts-thumbnails.php:538
@@ -501,142 +462,114 @@ msgstr "imposta a 0 per nessun estratto"
 #: related-posts-thumbnails.php:661
 #: related-posts-thumbnails.php:672
 #: related-posts-thumbnails.php:739
-#: related-posts-thumbnails.php:774
 msgid "Title:"
-msgstr "Titolo:"
+msgstr "Başlık"
 
 #: related-posts-thumbnails.php:464
 #: related-posts-thumbnails.php:514
 #: related-posts-thumbnails.php:572
 #: related-posts-thumbnails.php:583
 #: related-posts-thumbnails.php:650
-#: related-posts-thumbnails.php:685
 msgid "Text block height"
-msgstr "Altezza bloco testo"
+msgstr "Metin bloğu yüksekliği"
 
 #: related-posts-thumbnails.php:342
 #: related-posts-thumbnails.php:420
 #: related-posts-thumbnails.php:424
 #: related-posts-thumbnails.php:480
-#: related-posts-thumbnails.php:506
 msgid "Developer mode"
-msgstr "Modalità sviluppatore"
+msgstr "Geliştirici modu"
 
 #: related-posts-thumbnails.php:345
 #: related-posts-thumbnails.php:423
 #: related-posts-thumbnails.php:427
 #: related-posts-thumbnails.php:483
-#: related-posts-thumbnails.php:509
 msgid "This will add debugging information in HTML source"
-msgstr "questa operazione aggiungerà nel sorgente HTML delle informazioni per il debugging"
+msgstr "HTML kodlarına eklenti açıklama bilgileri eklensin"
 
 #: related-posts-thumbnails.php:322
 #: related-posts-thumbnails.php:325
 #: related-posts-thumbnails.php:368
-#: related-posts-thumbnails.php:392
 msgid "Wrong date"
-msgstr "Data errata"
+msgstr "Hatalı bir tarih girdiniz"
 
 #: related-posts-thumbnails.php:357
 #: related-posts-thumbnails.php:361
 #: related-posts-thumbnails.php:406
-#: related-posts-thumbnails.php:431
 msgid "Settings update failed"
-msgstr "L'aggiornamento delle impostazioni é fallito"
+msgstr "Ayarlar güncellenirken bir hata oluştu"
 
 #: related-posts-thumbnails.php:434
 #: related-posts-thumbnails.php:438
 #: related-posts-thumbnails.php:494
-#: related-posts-thumbnails.php:520
 msgid "Categories on which related thumbnails will appear"
-msgstr "Categorie nelle quali appariranno le miniature correlate"
+msgstr "Benzer küçük resimler (thumbnails) hangi kategorilerde gösterilsin"
 
 #: related-posts-thumbnails.php:440
 #: related-posts-thumbnails.php:444
 #: related-posts-thumbnails.php:500
-#: related-posts-thumbnails.php:526
 msgid "Categories that will appear in related thumbnails"
-msgstr "Categorie che appariranno nelle miniature correlate"
+msgstr "Küçük resimleri (thumbnails) seçili kategoriler ile ilişkilendir"
 
 #: related-posts-thumbnails.php:446
 #: related-posts-thumbnails.php:450
 #: related-posts-thumbnails.php:506
-#: related-posts-thumbnails.php:532
 msgid "Include only posts after"
-msgstr "Includi articoli a far data"
+msgstr "Sadece şu tarihten sonraki yazıları dahil et"
 
 #: related-posts-thumbnails.php:448
 #: related-posts-thumbnails.php:452
 #: related-posts-thumbnails.php:508
-#: related-posts-thumbnails.php:534
 msgid "Year"
-msgstr "Anno"
+msgstr "Yıl"
 
 #: related-posts-thumbnails.php:448
 #: related-posts-thumbnails.php:452
 #: related-posts-thumbnails.php:508
-#: related-posts-thumbnails.php:534
 msgid "Month"
-msgstr "Mese"
+msgstr "Ay"
 
 #: related-posts-thumbnails.php:448
 #: related-posts-thumbnails.php:452
 #: related-posts-thumbnails.php:508
-#: related-posts-thumbnails.php:534
 msgid "Day"
-msgstr "Giorno"
+msgstr "Gün"
 
 #: related-posts-thumbnails.php:448
 #: related-posts-thumbnails.php:452
 #: related-posts-thumbnails.php:508
-#: related-posts-thumbnails.php:534
 msgid "Leave empty for all posts dates"
-msgstr "lascia in bianco per includere tutte le date"
+msgstr "Boş bırakırsanız bütün yazılar dahil edilir"
 
 #: related-posts-thumbnails.php:592
 #: related-posts-thumbnails.php:603
 #: related-posts-thumbnails.php:670
-#: related-posts-thumbnails.php:705
 msgid "Random"
-msgstr "Casuale"
+msgstr "Rastgele"
 
 #: related-posts-thumbnails.php:521
 #: related-posts-thumbnails.php:577
-#: related-posts-thumbnails.php:612
 msgid "Theme resize url"
-msgstr "URL resize (tema)"
+msgstr "Resim boyutlandırma adresi"
 
 #: related-posts-thumbnails.php:524
 #: related-posts-thumbnails.php:580
-#: related-posts-thumbnails.php:615
 msgid "If your theme resizes images, enter URL to its resizing PHP file"
-msgstr "qualora il tuo tema ridimensionasse le immagini, inserisci qui l'URL al file PHP"
+msgstr "(Küçük resimleri yeniden boyutlandırmak için kullanılacak PHP dosyasının adresini yazın)"
 
 #: related-posts-thumbnails.php:589
-#: related-posts-thumbnails.php:624
 msgid "Output style"
-msgstr "Stile output:"
+msgstr "Görüntü Stili"
 
 #: related-posts-thumbnails.php:430
-#: related-posts-thumbnails.php:456
 msgid "Blocks"
-msgstr "Blocchi"
+msgstr "Blok şeklinde"
 
 #: related-posts-thumbnails.php:430
-#: related-posts-thumbnails.php:456
 msgid "List"
-msgstr "Lista"
+msgstr "Liste şeklinde"
 
 #: related-posts-thumbnails.php:596
-#: related-posts-thumbnails.php:631
 msgid "Turn off plugin styles"
-msgstr "Disattiva stili plugin"
-
-#: related-posts-thumbnails.php:586
-msgid "Show posts only with thumbnails"
-msgstr "Mostra i soli articoli con le miniature"
-
-#: related-posts-thumbnails.php:589
-msgid "Only posts with assigned Featured Image"
-msgstr "solo gli articoli aventi una immagine in evidenza"
+msgstr "Eklenti stilini devredışı bırak"
 
