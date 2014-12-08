@@ -267,7 +267,25 @@ class RelatedPostsThumbnails {
 					preg_match_all( '|<img.*?src=[\'"](' . $wud['baseurl'] . '.*?)[\'"].*?>|i', $post->post_content, $matches ); // searching for the first uploaded image in text
 					if ( isset( $matches ) ) $image = $matches[1][0];
 					else
-						$debug .= 'No image was found;';
+						$debug .= 'No image was found in body;';
+	                                if (!$image) { // then check for image attachment
+                                        	$p = array(
+                                        		'post_type' => 'attachment',
+                                        		'post_mime_type' => 'image',
+                                        		'numberposts' => 1,
+                                        		'order' => 'ASC',
+                                        		'orderby' => 'menu_order ID',
+                                        		'post_status' => null,
+                                        		'post_parent' => $post->ID
+                                        	);
+                                        	$attachments = get_posts($p);
+                                        	if ($attachments) {
+	                                                $imgsrc = wp_get_attachment_image_src($attachments[0]->ID, 'full');
+        	                                        $image = $imgsrc[0];
+                	                        }
+                        	                else
+                                	                $debug .= 'No attachment was found;';
+                                    	}
 					if ( strlen( trim( $image ) ) > 0 ) {
 						$image_sizes = @getimagesize( $image );
 						if ( $image_sizes === false )
