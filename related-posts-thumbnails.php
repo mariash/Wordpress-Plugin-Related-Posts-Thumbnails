@@ -298,6 +298,21 @@ class RelatedPostsThumbnails {
 							$debug .= 'Changing image according to Wordpress standards;';
 							$url = preg_replace( '/(-[0-9]+x[0-9]+)?(\.[^\.]*)$/', '-' . $width . 'x' . $height . '$2', $image );
 						}
+						// create thumb from image if it doesn't exist
+                                                $u = wp_upload_dir();
+                                                $wpcurl = strlen($u['baseurl']);
+                                                $source = $u['basedir'].substr($image, $wpcurl);
+                                                // if source is a WP resize, grab the full original source instead
+                                                $source = preg_replace( '/(-[0-9]+x[0-9]+)?(\.[^\.]*)$/', '$2', $source);
+                                                $thumb = $u['basedir'].substr($url, $wpcurl);
+                                                if (!file_exists($thumb) && file_exists($source)) {
+                                                        $debug .= 'Creating new thumbnail: ' . $thumb . ' from source: ' . $source . '; ';
+                                                        require_once(ABSPATH.'wp-admin/includes/image.php');
+                                                        $img = image_resize($source, $width, $height, true);
+                                                        $debug .= 'image_resize returned ' . $img . '; ';
+							// NOTE! WP image_resize function automatically forces lowercase .jpg extension, even if source has uppercase .JPG
+                                                        $url = preg_replace('/.JPG/','.jpg',$url); // make sure url is lowercase .jpg to match
+                                                }
 					}
 					else
 						$debug .= 'Found wrong formatted image: '.$image.';';
