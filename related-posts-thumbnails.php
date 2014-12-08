@@ -267,7 +267,25 @@ class RelatedPostsThumbnails {
 					preg_match_all( '|<img.*?src=[\'"](' . $wud['baseurl'] . '.*?)[\'"].*?>|i', $post->post_content, $matches ); // searching for the first uploaded image in text
 					if ( isset( $matches ) ) $image = $matches[1][0];
 					else
-						$debug .= 'No image was found;';
+						$debug .= 'No image was found in body;';
+	                                if (!$image) { // then check for image attachment
+                                        	$p = array(
+                                        		'post_type' => 'attachment',
+                                        		'post_mime_type' => 'image',
+                                        		'numberposts' => 1,
+                                        		'order' => 'ASC',
+                                        		'orderby' => 'menu_order ID',
+                                        		'post_status' => null,
+                                        		'post_parent' => $post->ID
+                                        	);
+                                        	$attachments = get_posts($p);
+                                        	if ($attachments) {
+	                                                $imgsrc = wp_get_attachment_image_src($attachments[0]->ID, 'full');
+        	                                        $image = $imgsrc[0];
+                	                        }
+                        	                else
+                                	                $debug .= 'No attachment was found;';
+                                    	}
 					if ( strlen( trim( $image ) ) > 0 ) {
 						$image_sizes = @getimagesize( $image );
 						if ( $image_sizes === false )
@@ -280,6 +298,21 @@ class RelatedPostsThumbnails {
 							$debug .= 'Changing image according to Wordpress standards;';
 							$url = preg_replace( '/(-[0-9]+x[0-9]+)?(\.[^\.]*)$/', '-' . $width . 'x' . $height . '$2', $image );
 						}
+						// create thumb from image if it doesn't exist
+                                                $u = wp_upload_dir();
+                                                $wpcurl = strlen($u['baseurl']);
+                                                $source = $u['basedir'].substr($image, $wpcurl);
+                                                // if source is a WP resize, grab the full original source instead
+                                                $source = preg_replace( '/(-[0-9]+x[0-9]+)?(\.[^\.]*)$/', '$2', $source);
+                                                $thumb = $u['basedir'].substr($url, $wpcurl);
+                                                if (!file_exists($thumb) && file_exists($source)) {
+                                                        $debug .= 'Creating new thumbnail: ' . $thumb . ' from source: ' . $source . '; ';
+                                                        require_once(ABSPATH.'wp-admin/includes/image.php');
+                                                        $img = image_resize($source, $width, $height, true);
+                                                        $debug .= 'image_resize returned ' . $img . '; ';
+							// NOTE! WP image_resize function automatically forces lowercase .jpg extension, even if source has uppercase .JPG
+                                                        $url = preg_replace('/.JPG/','.jpg',$url); // make sure url is lowercase .jpg to match
+                                                }
 					}
 					else
 						$debug .= 'Found wrong formatted image: '.$image.';';
@@ -330,7 +363,7 @@ class RelatedPostsThumbnails {
 			else {
 				$output .= '<a onmouseout="this.style.backgroundColor=\'' . get_option( 'relpoststh_background', $this->background ) . '\'" onmouseover="this.style.backgroundColor=\'' . get_option( 'relpoststh_hoverbackground', $this->hoverbackground ) . '\'" style="background-color: ' . get_option( 'relpoststh_background', $this->background ) . '; border-right: 1px solid ' . get_option( 'relpoststh_bordercolor', $this->border_color ) . '; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="' . get_permalink( $post->ID ) . '">';
 				$output .= '<div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: ' . $width . 'px; height: ' . ( $height + $text_height ) . 'px;">';
-				$output .= '<div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(' . $url . ') no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: ' . $width . 'px; height: ' . $height . 'px;"></div>';
+				$output .= '<div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(\'' . $url . '\') no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: ' . $width . 'px; height: ' . $height . 'px;"></div>';
 				$output .= '<div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ' . $fontface . '; font-style: normal; font-variant: normal; font-weight: normal; font-size: ' . get_option( 'relpoststh_fontsize', $this->font_size ) . 'px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: ' . get_option( 'relpoststh_fontcolor', $this->font_color ) . ';">' . $title . $excerpt . '</div>';
 				$output .= '</div>';
 				$output .= '</a>';
