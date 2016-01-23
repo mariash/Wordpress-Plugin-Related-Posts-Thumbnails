@@ -82,7 +82,7 @@ class RelatedPostsThumbnails {
 		$time                = microtime( true );
 		$posts_number        = get_option( 'relpoststh_number', $this->number );
 
-		if ( $posts_number < = 0 ) { // return nothing if this parameter was set to <= 0
+		if ( $posts_number <= 0 ) { // return nothing if this parameter was set to <= 0
 			return $this->finish_process( $output, $debug . 'Posts number is 0;', $time ); 
 		}
 
