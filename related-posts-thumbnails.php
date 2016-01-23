@@ -446,7 +446,11 @@ class RelatedPostsThumbnails {
 				else 
 					update_option( 'relpoststh_post_types', array() );				
 
-				update_option( 'relpoststh_onlywiththumbs', $_POST['onlywiththumbs'] );
+				if( isset( $_POST['onlywiththumbs'] ) ) 
+					update_option( 'relpoststh_onlywiththumbs', sanitize_text_field( wp_unslash( $_POST['onlywiththumbs'] ) ) );
+				else 
+					update_option( 'relpoststh_onlywiththumbs', '0' );
+
 				update_option( 'relpoststh_output_style', $_POST['relpoststh_output_style'] );
 				update_option( 'relpoststh_cleanhtml', $_POST['relpoststh_cleanhtml'] );
 				update_option( 'relpoststh_auto', $_POST['relpoststh_auto'] );
