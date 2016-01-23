@@ -53,6 +53,10 @@ class RelatedPostsThumbnails {
 		load_plugin_textdomain( 'related-posts-thumbnails', false, basename( dirname( __FILE__ ) ) . '/locale' );
 		$this->default_image = esc_url( plugins_url( 'img/default.png', __FILE__ ) );
 
+		// Compatibility for old default image path.
+		if ( $this->is_old_default_img() )
+			update_option( 'relpoststh_default_image', $this->default_image );
+
 		if ( get_option( 'relpoststh_auto', $this->auto ) ) {
 			add_filter( 'the_content', array( $this, 'auto_show' ) ); 
 		}
@@ -61,6 +65,22 @@ class RelatedPostsThumbnails {
 		add_shortcode( 'related-posts-thumbnails' , array( $this, 'get_html' ) );
 
 		$this->wp_version = get_bloginfo( 'version' );
+	}
+
+	/**
+	 * [is_old_default_img Check the compatibility for old default image path.]
+	 * @return boolean Return true if path is old.
+	 */
+	function is_old_default_img() {
+
+		if ( get_option( 'relpoststh_default_image') !== $this->default_image ) {
+
+			$chunks = explode( '/', get_option( 'relpoststh_default_image') );
+			if ( in_array('related-posts-thumbnails', $chunks) ) {
+				return true;
+			}
+		}
+
 	}
 
 	function auto_show( $content ) {
