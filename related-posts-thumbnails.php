@@ -435,8 +435,17 @@ class RelatedPostsThumbnails {
 				$set_date = '';
 			}
 			if ( $validation ) {
-				update_option( 'relpoststh_single_only', $_POST['relpoststh_single_only'] );
-				update_option( 'relpoststh_post_types', $_POST['relpoststh_post_types'] );
+
+				if( isset( $_POST['relpoststh_single_only'] ) ) 
+					update_option( 'relpoststh_single_only', sanitize_text_field( wp_unslash( $_POST['relpoststh_single_only'] ) ) );
+				else 
+					update_option( 'relpoststh_single_only', '0' );
+
+				if( isset( $_POST['relpoststh_post_types'] ) ) 
+					update_option( 'relpoststh_post_types', array_map( 'sanitize_text_field', wp_unslash( $_POST['relpoststh_post_types'] ) ) );
+				else 
+					update_option( 'relpoststh_post_types', array() );				
+
 				update_option( 'relpoststh_onlywiththumbs', $_POST['onlywiththumbs'] );
 				update_option( 'relpoststh_output_style', $_POST['relpoststh_output_style'] );
 				update_option( 'relpoststh_cleanhtml', $_POST['relpoststh_cleanhtml'] );
@@ -789,7 +798,7 @@ class RelatedPostsThumbnails {
 					</tr>
 				</table>
 			</div>
-			<input name="Submit" value="<?php _e( 'Save Changes', 'related-posts-thumbnails' ); ?>" type="submit">
+			<input name="Submit" value="<?php _e( 'Save Changes', 'related-posts-thumbnails' ); ?>" type="submit" class="button-primary">
 		</div>
 	</form>
 </div>
