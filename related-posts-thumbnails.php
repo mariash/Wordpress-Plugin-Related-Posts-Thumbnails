@@ -1,11 +1,13 @@
-<?php /*
-  Plugin Name:  Related Posts Thumbnails
-  Plugin URI:   http://wordpress.shaldybina.com/plugins/related-posts-thumbnails/
-  Description:  Showing related posts thumbnails under the post.
-  Version:      1.3.1
-  Author:       Maria Shaldybina
-  Author URI:   http://shaldybina.com/
-*/
+<?php 
+/**
+ * Plugin Name:  Related Posts Thumbnails
+ * Plugin URI:   http://wordpress.shaldybina.com/plugins/related-posts-thumbnails/
+ * Description:  Showing related posts thumbnails under the post.
+ * Version:      1.3.1
+ * Author:       Maria Shaldybina
+ * Author URI:   http://shaldybina.com/
+ */
+
 /*
    Copyright 2010  Maria I Shaldybina
 
@@ -790,7 +792,7 @@ function get_related_posts_thumbnails() {
  */
 class RelatedPostsThumbnailsWidget extends WP_Widget {
 	function RelatedPostsThumbnailsWidget() {
-		parent::WP_Widget( false, $name = 'Related Posts Thumbnails' );
+		parent::__construct( false, $name = 'Related Posts Thumbnails' );
 	}
 
 	function widget( $args, $instance ) {
