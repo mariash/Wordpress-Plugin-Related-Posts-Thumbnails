@@ -23,39 +23,43 @@
 */
 class RelatedPostsThumbnails {
 	/* Default values. PHP 4 compatible */
-	var $single_only = '1';
-	var $auto = '1';
-	var $top_text = '<h3>Related posts:</h3>';
-	var $number = 3;
-	var $relation = 'categories';
-	var $poststhname = 'thumbnail';
-	var $background = '#FFFFFF';
-	var $hoverbackground = '#EEEEEF';
-	var $border_color = '#DDDDDD';
-	var $font_color = '#333333';
-	var $font_family = 'Arial';
-	var $font_size = '12';
-	var $text_length = '100';
-	var $excerpt_length = '0';
-	var $custom_field = '';
-	var $custom_height = '100';
-	var $custom_width = '100';
+	var $single_only       = '1';
+	var $auto              = '1';
+	var $top_text          = '<h3>Related posts:</h3>';
+	var $number            = 3;
+	var $relation          = 'categories';
+	var $poststhname       = 'thumbnail';
+	var $background        = '#FFFFFF';
+	var $hoverbackground   = '#EEEEEF';
+	var $border_color      = '#DDDDDD';
+	var $font_color        = '#333333';
+	var $font_family       = 'Arial';
+	var $font_size         = '12';
+	var $text_length       = '100';
+	var $excerpt_length    = '0';
+	var $custom_field      = '';
+	var $custom_height     = '100';
+	var $custom_width      = '100';
 	var $text_block_height = '75';
-	var $thsource = 'post-thumbnails';
-	var $categories_all = '1';
-	var $devmode = '0';
-	var $output_style = 'div';
-	var $post_types = array( 'post' );
+	var $thsource          = 'post-thumbnails';
+	var $categories_all    = '1';
+	var $devmode           = '0';
+	var $output_style      = 'div';
+	var $post_types        = array( 'post' );
 	var $custom_taxonomies = array();
 
 	function RelatedPostsThumbnails() {
 		// initialization
 		load_plugin_textdomain( 'related-posts-thumbnails', false, basename( dirname( __FILE__ ) ) . '/locale' );
 		$this->default_image = WP_PLUGIN_URL . '/related-posts-thumbnails/img/default.png';
+
 		if ( get_option( 'relpoststh_auto', $this->auto ) ) {
-			add_filter( 'the_content', array( $this, 'auto_show' ) ); }
+			add_filter( 'the_content', array( $this, 'auto_show' ) ); 
+		}
+
 		add_action( 'admin_menu',  array( $this, 'admin_menu' ) );
 		add_shortcode( 'related-posts-thumbnails' , array( $this, 'get_html' ) );
+
 		$this->wp_version = get_bloginfo( 'version' );
 	}
 
@@ -73,21 +77,24 @@ class RelatedPostsThumbnails {
 
 	function get_thumbnails( $show_top = false ) {
 		// Retrieve Related Posts HTML for output
-		$output = '';
-		$debug = 'Developer mode initialisation; Version: 1.2.9;';
-		$time = microtime( true );
-		$posts_number = get_option( 'relpoststh_number', $this->number );
-		if ( $posts_number <= 0 ) { // return nothing if this parameter was set to <= 0
-			return $this->finish_process( $output, $debug . 'Posts number is 0;', $time ); }
-		$id = get_the_ID();
-		$relation = get_option( 'relpoststh_relation', $this->relation );
-		$poststhname = get_option( 'relpoststh_poststhname', $this->poststhname );
-		$text_length = get_option( 'relpoststh_textlength', $this->text_length );
-		$excerpt_length = get_option( 'relpoststh_excerptlength', $this->excerpt_length );
-		$thsource = get_option( 'relpoststh_thsource', $this->thsource );
+		$output              = '';
+		$debug               = 'Developer mode initialisation; Version: 1.2.9;';
+		$time                = microtime( true );
+		$posts_number        = get_option( 'relpoststh_number', $this->number );
+
+		if ( $posts_number < = 0 ) { // return nothing if this parameter was set to <= 0
+			return $this->finish_process( $output, $debug . 'Posts number is 0;', $time ); 
+		}
+
+		$id                  = get_the_ID();
+		$relation            = get_option( 'relpoststh_relation', $this->relation );
+		$poststhname         = get_option( 'relpoststh_poststhname', $this->poststhname );
+		$text_length         = get_option( 'relpoststh_textlength', $this->text_length );
+		$excerpt_length      = get_option( 'relpoststh_excerptlength', $this->excerpt_length );
+		$thsource            = get_option( 'relpoststh_thsource', $this->thsource );
 		$categories_show_all = get_option( 'relpoststh_show_categoriesall', get_option( 'relpoststh_categoriesall', $this->categories_all ) );
-		$onlywiththumbs = ( current_theme_supports( 'post-thumbnails' ) && $thsource == 'post-thumbnails' ) ? get_option( 'relpoststh_onlywiththumbs', false ) : false;
-		$post_type = get_post_type();
+		$onlywiththumbs      = ( current_theme_supports( 'post-thumbnails' ) && $thsource == 'post-thumbnails' ) ? get_option( 'relpoststh_onlywiththumbs', false ) : false;
+		$post_type           = get_post_type();
 
 		global $wpdb;
 
@@ -257,6 +264,9 @@ class RelatedPostsThumbnails {
 					$debug .= 'Getting image from post body;';
 					$wud = wp_upload_dir();
 					preg_match_all( '|<img.*?src=[\'"](' . $wud['baseurl'] . '.*?)[\'"].*?>|i', $post->post_content, $matches ); // searching for the first uploaded image in text
+					
+					//var_dump($matches);
+
 					if ( isset( $matches ) ) { $image = $matches[1][0];
 					} else { 						$debug .= 'No image was found;'; }
 					if ( strlen( trim( $image ) ) > 0 ) {
@@ -443,21 +453,21 @@ class RelatedPostsThumbnails {
 				$available_sizes = array_merge( $available_sizes, $_wp_additional_image_sizes );
 			}
 		}
-		$relpoststh_single_only = get_option( 'relpoststh_single_only', $this->single_only );
-		$relpoststh_auto = get_option( 'relpoststh_auto', $this->auto );
-		$relpoststh_cleanhtml = get_option( 'relpoststh_cleanhtml', 0 );
-		$relpoststh_relation = get_option( 'relpoststh_relation', $this->relation );
-		$relpoststh_thsource = get_option( 'relpoststh_thsource', $this->thsource );
-		$relpoststh_devmode = get_option( 'relpoststh_devmode', $this->devmode );
-		$relpoststh_categoriesall = get_option( 'relpoststh_categoriesall', $this->categories_all );
-		$relpoststh_categories = get_option( 'relpoststh_categories' );
-		$relpoststh_show_categories = get_option( 'relpoststh_show_categories', get_option( 'relpoststh_categories' ) );
+		$relpoststh_single_only        = get_option( 'relpoststh_single_only', $this->single_only );
+		$relpoststh_auto               = get_option( 'relpoststh_auto', $this->auto );
+		$relpoststh_cleanhtml          = get_option( 'relpoststh_cleanhtml', 0 );
+		$relpoststh_relation           = get_option( 'relpoststh_relation', $this->relation );
+		$relpoststh_thsource           = get_option( 'relpoststh_thsource', $this->thsource );
+		$relpoststh_devmode            = get_option( 'relpoststh_devmode', $this->devmode );
+		$relpoststh_categoriesall      = get_option( 'relpoststh_categoriesall', $this->categories_all );
+		$relpoststh_categories         = get_option( 'relpoststh_categories' );
+		$relpoststh_show_categories    = get_option( 'relpoststh_show_categories', get_option( 'relpoststh_categories' ) );
 		$relpoststh_show_categoriesall = get_option( 'relpoststh_show_categoriesall', $relpoststh_categoriesall );
-		$onlywiththumbs = get_option( 'relpoststh_onlywiththumbs', false );
-		$relpoststh_startdate = explode( '-', get_option( 'relpoststh_startdate' ) );
-		$relpoststh_output_style = get_option( 'relpoststh_output_style', $this->output_style );
-		$thsources = array( 'post-thumbnails' => __( 'Post thumbnails', 'related_posts_thumbnails' ), 'custom-field' => __( 'Custom field', 'related_posts_thumbnails' ) );
-		$categories = get_categories();
+		$onlywiththumbs                = get_option( 'relpoststh_onlywiththumbs', false );
+		$relpoststh_startdate          = explode( '-', get_option( 'relpoststh_startdate' ) );
+		$relpoststh_output_style       = get_option( 'relpoststh_output_style', $this->output_style );
+		$thsources                     = array( 'post-thumbnails' => __( 'Post thumbnails', 'related_posts_thumbnails' ), 'custom-field' => __( 'Custom field', 'related_posts_thumbnails' ) );
+		$categories                    = get_categories();
 		if ( $this->wp_version >= 3 ) {
 			$post_types = get_post_types( array( 'public' => 1 ) );
 		} else {
