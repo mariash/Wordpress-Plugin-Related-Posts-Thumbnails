@@ -267,8 +267,12 @@ class RelatedPostsThumbnails {
 					
 					//var_dump($matches);
 
-					if ( isset( $matches ) ) { $image = $matches[1][0];
-					} else { 						$debug .= 'No image was found;'; }
+					if ( isset( $matches ) and isset( $matches[1][0] ) ) {
+						$image = $matches[1][0];
+					} else {
+						$debug .= 'No image was found;'; 
+					}
+
 					if ( strlen( trim( $image ) ) > 0 ) {
 						$image_sizes = @getimagesize( $image );
 						if ( $image_sizes === false ) {
@@ -304,6 +308,8 @@ class RelatedPostsThumbnails {
 				$title = '<b>' . $title . '</b>';
 				$excerpt = '<br/>' . $excerpt;
 			}
+
+			$fontface = '';
 
 			$debug .= 'Using title with size ' . $text_length . '. Using excerpt with size ' . $excerpt_length . ';';
 			if ( $relpoststh_output_style == 'list' ) {
