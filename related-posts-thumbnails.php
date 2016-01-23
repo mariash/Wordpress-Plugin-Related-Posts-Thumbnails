@@ -51,7 +51,7 @@ class RelatedPostsThumbnails {
 	function RelatedPostsThumbnails() {
 		// initialization
 		load_plugin_textdomain( 'related-posts-thumbnails', false, basename( dirname( __FILE__ ) ) . '/locale' );
-		$this->default_image = WP_PLUGIN_URL . '/related-posts-thumbnails/img/default.png';
+		$this->default_image = esc_url( plugins_url( 'img/default.png', __FILE__ ) );
 
 		if ( get_option( 'relpoststh_auto', $this->auto ) ) {
 			add_filter( 'the_content', array( $this, 'auto_show' ) ); 
