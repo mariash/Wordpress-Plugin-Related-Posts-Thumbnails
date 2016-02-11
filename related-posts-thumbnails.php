@@ -26,7 +26,7 @@ class RelatedPostsThumbnails {
 	var $single_only       = '1';
 	var $auto              = '1';
 	var $top_text          = '<h3>Related posts:</h3>';
-	var $number            = 4;
+	var $number            = 3;
 	var $relation          = 'categories';
 	var $poststhname       = 'thumbnail';
 	var $background        = '#FFFFFF';
