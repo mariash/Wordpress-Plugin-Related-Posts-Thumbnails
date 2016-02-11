@@ -602,8 +602,8 @@ class RelatedPostsThumbnails {
 		<input type="hidden" name="action" value="update" />
 		<?php wp_nonce_field( 'related-posts-thumbnails' ); ?>
 		<div class="metabox-holder">
-			<div class="postbox">
-				<h3><?php _e( 'General Display Options', 'related-posts-thumbnails' ); ?>:</h3>
+			<div class="postbox" style="padding: 20px">
+				<h2><?php _e( 'General Display Options', 'related-posts-thumbnails' ); ?>:</h2>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><?php _e( 'Automatically append to the post content', 'related-posts-thumbnails' ); ?>:</th>
@@ -685,8 +685,8 @@ class RelatedPostsThumbnails {
 					</tr>
 				</table>
 			</div>
-			<div class="postbox" id="relpoststh-post-thumbnails" <?php if ( $relpoststh_thsource != 'post-thumbnails' ) : ?> style="display:none" <?php endif; ?>>
-				<h3><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</h3>
+			<div class="postbox" style="padding: 20px" id="relpoststh-post-thumbnails" <?php if ( $relpoststh_thsource != 'post-thumbnails' ) : ?> style="display:none" <?php endif; ?>>
+				<h2><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</h2>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><?php _e( 'Post-thumbnails name', 'related-posts-thumbnails' ); ?>:</th>
@@ -712,8 +712,8 @@ class RelatedPostsThumbnails {
 					<?php endif; ?>
 				</table>
 			</div>
-			<div class="postbox" id="relpoststh-custom-field" <?php if ( $relpoststh_thsource != 'custom-field' ) : ?> style="display:none" <?php endif; ?>>
-				<h3><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</h3>
+			<div class="postbox" style="padding: 20px" id="relpoststh-custom-field" <?php if ( $relpoststh_thsource != 'custom-field' ) : ?> style="display:none" <?php endif; ?>>
+				<h2><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</h2>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><?php _e( 'Custom field name', 'related-posts-thumbnails' ); ?>:</th>
@@ -737,8 +737,8 @@ class RelatedPostsThumbnails {
 					</tr>
 				</table>
 			</div>
-			<div class="postbox">
-				<h3><?php _e( 'Style options', 'related-posts-thumbnails' ); ?>:</h3>
+			<div class="postbox" style="padding: 20px">
+				<h2><?php _e( 'Style options', 'related-posts-thumbnails' ); ?>:</h2>
 				<table class="form-table">
 					<tr>
 						<th scope="row"><?php _e( 'Output style', 'related-posts-thumbnails' ); ?>:</th>
@@ -810,8 +810,8 @@ class RelatedPostsThumbnails {
 					</tr>
 				</table>
 			</div>
-			<div class="postbox">
-				<h3><?php _e( 'Relation Builder Options', 'related-posts-thumbnails' ); ?>:</h3>
+			<div class="postbox" style="padding: 20px">
+				<h2><?php _e( 'Relation Builder Options', 'related-posts-thumbnails' ); ?>:</h2>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><?php _e( 'Relation based on', 'related-posts-thumbnails' ); ?>:</th>
