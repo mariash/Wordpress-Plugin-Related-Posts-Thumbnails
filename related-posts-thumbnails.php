@@ -483,7 +483,9 @@ class RelatedPostsThumbnails {
 					update_option( 'relpoststh_onlywiththumbs', '0' );
 				}
 
-				update_option( 'relpoststh_output_style', $_POST['relpoststh_output_style'] );
+				if( isset( $_POST['relpoststh_output_style'] ) ) {
+					update_option( 'relpoststh_output_style', sanitize_text_field( wp_unslash( $_POST['relpoststh_output_style'] ) ) );
+				}
 
 				if( isset( $_POST['relpoststh_cleanhtml'] ) ) {
 					update_option( 'relpoststh_cleanhtml', sanitize_text_field( wp_unslash( $_POST['relpoststh_cleanhtml'] ) ) );
@@ -497,7 +499,10 @@ class RelatedPostsThumbnails {
 					update_option( 'relpoststh_auto', '0' );
 				}
 
-				update_option( 'relpoststh_top_text', $_POST['relpoststh_top_text'] );
+				if( isset( $_POST['relpoststh_top_text'] ) ) {
+					update_option( 'relpoststh_top_text', sanitize_text_field( wp_unslash( $_POST['relpoststh_top_text'] ) ) );
+				}
+
 				update_option( 'relpoststh_number', $_POST['relpoststh_number'] );
 				update_option( 'relpoststh_relation', $_POST['relpoststh_relation'] );
 				update_option( 'relpoststh_default_image', $_POST['relpoststh_default_image'] );
