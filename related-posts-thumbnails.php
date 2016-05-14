@@ -484,7 +484,13 @@ class RelatedPostsThumbnails {
 				}
 
 				update_option( 'relpoststh_output_style', $_POST['relpoststh_output_style'] );
-				update_option( 'relpoststh_cleanhtml', $_POST['relpoststh_cleanhtml'] );
+
+				if( isset( $_POST['relpoststh_cleanhtml'] ) ) {
+					update_option( 'relpoststh_cleanhtml', sanitize_text_field( wp_unslash( $_POST['relpoststh_cleanhtml'] ) ) );
+				} else {
+					update_option( 'relpoststh_cleanhtml', '0' );
+				}
+
 				update_option( 'relpoststh_auto', $_POST['relpoststh_auto'] );
 				update_option( 'relpoststh_top_text', $_POST['relpoststh_top_text'] );
 				update_option( 'relpoststh_number', $_POST['relpoststh_number'] );
@@ -506,12 +512,33 @@ class RelatedPostsThumbnails {
 				update_option( 'relpoststh_customheight', $_POST['relpoststh_customheight'] );
 				update_option( 'relpoststh_textblockheight', $_POST['relpoststh_textblockheight'] );
 				update_option( 'relpoststh_categoriesall', $_POST['relpoststh_categoriesall'] );
-				update_option( 'relpoststh_categories', $_POST['relpoststh_categories'] );
+
+				if( isset( $_POST['relpoststh_categories'] ) ) {
+					update_option( 'relpoststh_categories', array_map( 'sanitize_text_field', wp_unslash( $_POST['relpoststh_categories'] ) ) );
+				} else {
+					update_option( 'relpoststh_categories', array() );
+				}
+
 				update_option( 'relpoststh_show_categoriesall', $_POST['relpoststh_show_categoriesall'] );
-				update_option( 'relpoststh_show_categories', $_POST['relpoststh_show_categories'] );
-				update_option( 'relpoststh_devmode', $_POST['relpoststh_devmode'] );
+
+				if( isset( $_POST['relpoststh_show_categories'] ) ) {
+					update_option( 'relpoststh_show_categories', sanitize_text_field( wp_unslash( $_POST['relpoststh_show_categories'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_devmode'] ) ) {
+					update_option( 'relpoststh_devmode', sanitize_text_field( wp_unslash( $_POST['relpoststh_devmode'] ) ) );
+				} else {
+					update_option( 'relpoststh_devmode', '0' );
+				}
+
 				update_option( 'relpoststh_startdate', $set_date );
-				update_option( 'relpoststh_custom_taxonomies', $_POST['relpoststh_custom_taxonomies'] );
+
+				if( isset( $_POST['relpoststh_custom_taxonomies'] ) ) {
+					update_option( 'relpoststh_custom_taxonomies', array_map( 'sanitize_text_field', wp_unslash( $_POST['relpoststh_custom_taxonomies'] ) ) );
+				} else {
+					update_option( 'relpoststh_custom_taxonomies', array() );
+				}
+				
 				echo "<div class='updated fade'><p>" . __( 'Settings updated', 'related-posts-thumbnails' ) .'</p></div>';
 			} else {
 				echo "<div class='error fade'><p>" . __( 'Settings update failed', 'related-posts-thumbnails' ) . '. '. $error . '</p></div>';
