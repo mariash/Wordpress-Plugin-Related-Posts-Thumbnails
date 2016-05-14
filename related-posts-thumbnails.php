@@ -491,7 +491,12 @@ class RelatedPostsThumbnails {
 					update_option( 'relpoststh_cleanhtml', '0' );
 				}
 
-				update_option( 'relpoststh_auto', $_POST['relpoststh_auto'] );
+				if( isset( $_POST['relpoststh_auto'] ) ) {
+					update_option( 'relpoststh_auto', sanitize_text_field( wp_unslash( $_POST['relpoststh_auto'] ) ) );
+				} else {
+					update_option( 'relpoststh_auto', '0' );
+				}
+
 				update_option( 'relpoststh_top_text', $_POST['relpoststh_top_text'] );
 				update_option( 'relpoststh_number', $_POST['relpoststh_number'] );
 				update_option( 'relpoststh_relation', $_POST['relpoststh_relation'] );
@@ -511,7 +516,6 @@ class RelatedPostsThumbnails {
 				update_option( 'relpoststh_customwidth', $_POST['relpoststh_customwidth'] );
 				update_option( 'relpoststh_customheight', $_POST['relpoststh_customheight'] );
 				update_option( 'relpoststh_textblockheight', $_POST['relpoststh_textblockheight'] );
-				update_option( 'relpoststh_categoriesall', $_POST['relpoststh_categoriesall'] );
 
 				if( isset( $_POST['relpoststh_categories'] ) ) {
 					update_option( 'relpoststh_categories', array_map( 'sanitize_text_field', wp_unslash( $_POST['relpoststh_categories'] ) ) );
@@ -519,7 +523,13 @@ class RelatedPostsThumbnails {
 					update_option( 'relpoststh_categories', array() );
 				}
 
-				update_option( 'relpoststh_show_categoriesall', $_POST['relpoststh_show_categoriesall'] );
+				if( isset( $_POST['relpoststh_categoriesall'] ) ) {
+					update_option( 'relpoststh_categoriesall', sanitize_text_field( wp_unslash( $_POST['relpoststh_categoriesall'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_show_categoriesall'] ) ) {
+					update_option( 'relpoststh_show_categoriesall', sanitize_text_field( wp_unslash( $_POST['relpoststh_show_categoriesall'] ) ) );
+				}
 
 				if( isset( $_POST['relpoststh_show_categories'] ) ) {
 					update_option( 'relpoststh_show_categories', sanitize_text_field( wp_unslash( $_POST['relpoststh_show_categories'] ) ) );
@@ -538,7 +548,7 @@ class RelatedPostsThumbnails {
 				} else {
 					update_option( 'relpoststh_custom_taxonomies', array() );
 				}
-				
+
 				echo "<div class='updated fade'><p>" . __( 'Settings updated', 'related-posts-thumbnails' ) .'</p></div>';
 			} else {
 				echo "<div class='error fade'><p>" . __( 'Settings update failed', 'related-posts-thumbnails' ) . '. '. $error . '</p></div>';
