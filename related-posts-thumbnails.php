@@ -532,7 +532,9 @@ class RelatedPostsThumbnails {
 				}
 
 				if( isset( $_POST['relpoststh_show_categories'] ) ) {
-					update_option( 'relpoststh_show_categories', sanitize_text_field( wp_unslash( $_POST['relpoststh_show_categories'] ) ) );
+					update_option( 'relpoststh_show_categories', array_map( 'sanitize_text_field', wp_unslash( $_POST['relpoststh_show_categories'] ) ) );
+				} else {
+					update_option( 'relpoststh_show_categories', array() );
 				}
 
 				if( isset( $_POST['relpoststh_devmode'] ) ) {
