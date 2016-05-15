@@ -660,199 +660,199 @@ class RelatedPostsThumbnails {
 			$relation_options['custom'] .= ' '. __( '(This option is available for WP v3+ only)', 'related_posts_thumbnails' );
 		}
 		?>
-<script type="text/javascript">
-	jQuery(document).ready(function($) {
-		$(".select_all").click(function(){
-			if (this.checked) {
-				$(this).parent().find("div.select_specific").hide();
-			}
-			else {
-				$(this).parent().find("div.select_specific").show();
-			}
-		});
-		$('#relpoststh_thsource').change(function(){
-			if (this.value == 'post-thumbnails') {
-				$('#relpoststh-post-thumbnails').show();
-				$('#relpoststh-custom-field').hide();
-			}
-			else {
-				$('#relpoststh-post-thumbnails').hide();
-				$('#relpoststh-custom-field').show();
-			}
-		});
-		$('#relpoststh_output_style').change(function(){
-			if (this.value == 'list') {
-				$('#relpoststh_cleanhtml').show();
-			}
-			else {
-				$('#relpoststh_cleanhtml').hide();
-			}
-		});
-		$("input[name='relpoststh_relation']").change(function(){
-			if ($("input[name='relpoststh_relation']:checked").val() == 'custom') {
-				$('#custom_taxonomies').show();
-			}
-			else {
-				$('#custom_taxonomies').hide();
-			}
-		});
-	});
-</script>
-<div class="wrap">
-	<div class="icon32" id="icon-options-general"><br></div>
-	<h2><?php _e( 'Related Posts Thumbnails Settings', 'related-posts-thumbnails' ); ?></h2>
-	<form action="?page=related-posts-thumbnails" method="POST">
-		<input type="hidden" name="action" value="update" />
-		<?php wp_nonce_field( 'related-posts-thumbnails' ); ?>
-		<div class="metabox-holder">
-			<div class="postbox" style="padding: 20px">
-				<h2><?php _e( 'General Display Options', 'related-posts-thumbnails' ); ?>:</h2>
-				<table class="form-table">
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Automatically append to the post content', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="checkbox" name="relpoststh_auto" id="relpoststh_auto" value="1" <?php if ( $relpoststh_auto ) { echo 'checked="checked"'; } ?>/>
-							<label for="relpoststh_auto"><?php _e( 'Or use <b>&lt;?php get_related_posts_thumbnails(); ?&gt;</b> in the Loop', 'related-posts-thumbnails' ); ?></label><br />
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Developer mode', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="checkbox" name="relpoststh_devmode" id="relpoststh_devmode" value="1" <?php if ( $relpoststh_devmode ) { echo 'checked="checked"'; } ?>/>
-							<label for="relpoststh_devmode"><?php _e( 'This will add debugging information in HTML source', 'related-posts-thumbnails' ); ?></label><br />
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Page type', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="checkbox" name="relpoststh_single_only" id="relpoststh_single_only" value="1" <?php if ( $relpoststh_single_only ) { echo 'checked="checked"'; } ?>/>
-							<label for="relpoststh_single_only"><?php _e( 'Show on single posts only', 'related-posts-thumbnails' ); ?></label><br />
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Post types', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<?php if ( is_array( $post_types ) && count( $post_types ) ) :  ?>
-							<?php foreach ( $post_types as $post_type ) : ?>
-							<input type="checkbox" name="relpoststh_post_types[]" id="pt_<?php echo $post_type; ?>" value="<?php echo $post_type; ?>" <?php if ( in_array( $post_type, $relpoststh_post_types ) ) { echo 'checked="checked"'; } ?>/>
-							<label for="pt_<?php echo $post_type; ?>"><?php echo $post_type; ?></label>
-							<?php endforeach; ?>
-							<?php endif; ?>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Categories on which related thumbnails will appear', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<?php $this->display_categories_list( $relpoststh_categoriesall, $categories, $relpoststh_categories, 'relpoststh_categoriesall', 'relpoststh_categories' ); ?>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Categories that will appear in related thumbnails', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<?php $this->display_categories_list( $relpoststh_show_categoriesall, $categories, $relpoststh_show_categories, 'relpoststh_show_categoriesall', 'relpoststh_show_categories' ); ?>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><?php _e( 'Include only posts after', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<?php _e( 'Year', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_year" size="4" value="<?php if ( isset( $relpoststh_startdate[0] ) ) { echo $relpoststh_startdate[0]; } ?>"> <?php _e( 'Month', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_month" size="2" value="<?php if ( isset( $relpoststh_startdate[1] ) ) { echo $relpoststh_startdate[1]; } ?>"> <?php _e( 'Day', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_day" size="2" value="<?php if ( isset( $relpoststh_startdate[2] ) ) { echo $relpoststh_startdate[2]; } ?>"> <label for="relpoststh_excerptlength"><?php _e( 'Leave empty for all posts dates', 'related-posts-thumbnails' ); ?></label><br />
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><?php _e( 'Top text', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="text" name="relpoststh_top_text" value="<?php echo stripslashes( htmlspecialchars( get_option( 'relpoststh_top_text', $this->top_text ) ) ); ?>" size="50"/>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><?php _e( 'Number of similar posts to display', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="text" name="relpoststh_number" value="<?php echo get_option( 'relpoststh_number', $this->number ); ?>" size="2"/>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><?php _e( 'Default image URL', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="text" name="relpoststh_default_image" value="<?php echo get_option( 'relpoststh_default_image', $this->default_image );?>" size="50"/>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<select name="relpoststh_thsource"  id="relpoststh_thsource">
-								<?php foreach ( $thsources as $name => $title ) : ?>
-								<option value="<?php echo $name; ?>" <?php if ( $relpoststh_thsource == $name ) { echo 'selected'; } ?>><?php echo $title; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div class="postbox" style="padding: 20px" id="relpoststh-post-thumbnails" <?php if ( $relpoststh_thsource != 'post-thumbnails' ) : ?> style="display:none" <?php endif; ?>>
-				<h2><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</h2>
-				<table class="form-table">
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Post-thumbnails name', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<select name="relpoststh_poststhname">
-								<?php foreach ( $available_sizes as $size_name => $size ) : ?>
-								<option <?php if ( $size_name == get_option( 'relpoststh_poststhname', $this->poststhname ) ) { echo 'selected'; } ?>><?php echo $size_name; ?></option>
-								<?php endforeach; ?>
-							</select>
-							<?php if ( ! current_theme_supports( 'post-thumbnails' ) ) : ?>
-							(<?php _e( 'Your theme has to support post-thumbnails to have more choices', 'related-posts-thumbnails' ); ?>)
-							<?php endif; ?>
-						</td>
-					</tr>
-					<?php if ( current_theme_supports( 'post-thumbnails' ) ) :  ?>
-					<tr>
-						<th scope="row"><?php _e( 'Show posts only with thumbnails', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="checkbox" name="onlywiththumbs" id="onlywiththumbs" value="1" <?php if ( $onlywiththumbs ) { echo 'checked="checked"'; } ?>/>
-							<label for="onlywiththumbs"><?php _e( 'Only posts with assigned Featured Image', 'related-posts-thumbnails' ); ?></label><br />
-						</td>
-					</tr>
-					<?php endif; ?>
-				</table>
-			</div>
-			<div class="postbox" style="padding: 20px" id="relpoststh-custom-field" <?php if ( $relpoststh_thsource != 'custom-field' ) : ?> style="display:none" <?php endif; ?>>
-				<h2><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</h2>
-				<table class="form-table">
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Custom field name', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="text" name="relpoststh_customfield" value="<?php echo get_option( 'relpoststh_customfield', $this->custom_field );?>" size="50"/>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Size', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<?php _e( 'Width', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_customwidth" value="<?php echo get_option( 'relpoststh_customwidth', $this->custom_width );?>" size="3"/>px x
-							<?php _e( 'Height', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_customheight" value="<?php echo get_option( 'relpoststh_customheight', $this->custom_height );?>" size="3"/>px
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Theme resize url', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<input type="text" name="relpoststh_theme_resize_url" value="<?php echo get_option( 'relpoststh_theme_resize_url', '' );?>" size="50"/>
-							(<?php _e( 'If your theme resizes images, enter URL to its resizing PHP file', 'related-posts-thumbnails' ); ?>)
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div class="postbox" style="padding: 20px">
-				<h2><?php _e( 'Style options', 'related-posts-thumbnails' ); ?>:</h2>
-				<table class="form-table">
-					<tr>
-						<th scope="row"><?php _e( 'Output style', 'related-posts-thumbnails' ); ?>:</th>
-						<td>
-							<select name="relpoststh_output_style"  id="relpoststh_output_style">
-								<?php foreach ( $output_styles as $name => $title ) : ?>
-								<option value="<?php echo $name; ?>" <?php if ( $relpoststh_output_style == $name ) { echo 'selected'; } ?>><?php echo $title; ?></option>
-								<?php endforeach; ?>
-							</select>
-							<span id="relpoststh_cleanhtml" style="display: <?php if ( $relpoststh_output_style == 'list' ) { echo 'inline';
-} else { echo 'none'; }?>;"><?php _e( 'Turn off plugin styles', 'related-posts-thumbnails' ); ?> <input type="checkbox" name="relpoststh_cleanhtml" <?php if ( $relpoststh_cleanhtml ) { echo 'checked="checked"'; } ?> /></span>
+			<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					$(".select_all").click(function(){
+						if (this.checked) {
+							$(this).parent().find("div.select_specific").hide();
+						}
+						else {
+							$(this).parent().find("div.select_specific").show();
+						}
+					});
+					$('#relpoststh_thsource').change(function(){
+						if (this.value == 'post-thumbnails') {
+							$('#relpoststh-post-thumbnails').show();
+							$('#relpoststh-custom-field').hide();
+						}
+						else {
+							$('#relpoststh-post-thumbnails').hide();
+							$('#relpoststh-custom-field').show();
+						}
+					});
+					$('#relpoststh_output_style').change(function(){
+						if (this.value == 'list') {
+							$('#relpoststh_cleanhtml').show();
+						}
+						else {
+							$('#relpoststh_cleanhtml').hide();
+						}
+					});
+					$("input[name='relpoststh_relation']").change(function(){
+						if ($("input[name='relpoststh_relation']:checked").val() == 'custom') {
+							$('#custom_taxonomies').show();
+						}
+						else {
+							$('#custom_taxonomies').hide();
+						}
+					});
+				});
+			</script>
+			<div class="wrap">
+				<div class="icon32" id="icon-options-general"><br></div>
+				<h2><?php _e( 'Related Posts Thumbnails Settings', 'related-posts-thumbnails' ); ?></h2>
+				<form action="?page=related-posts-thumbnails" method="POST">
+					<input type="hidden" name="action" value="update" />
+					<?php wp_nonce_field( 'related-posts-thumbnails' ); ?>
+					<div class="metabox-holder">
+						<div class="postbox" style="padding: 20px">
+							<h2><?php _e( 'General Display Options', 'related-posts-thumbnails' ); ?>:</h2>
+							<table class="form-table">
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Automatically append to the post content', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="checkbox" name="relpoststh_auto" id="relpoststh_auto" value="1" <?php if ( $relpoststh_auto ) { echo 'checked="checked"'; } ?>/>
+										<label for="relpoststh_auto"><?php _e( 'Or use <b>&lt;?php get_related_posts_thumbnails(); ?&gt;</b> in the Loop', 'related-posts-thumbnails' ); ?></label><br />
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Developer mode', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="checkbox" name="relpoststh_devmode" id="relpoststh_devmode" value="1" <?php if ( $relpoststh_devmode ) { echo 'checked="checked"'; } ?>/>
+										<label for="relpoststh_devmode"><?php _e( 'This will add debugging information in HTML source', 'related-posts-thumbnails' ); ?></label><br />
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Page type', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="checkbox" name="relpoststh_single_only" id="relpoststh_single_only" value="1" <?php if ( $relpoststh_single_only ) { echo 'checked="checked"'; } ?>/>
+										<label for="relpoststh_single_only"><?php _e( 'Show on single posts only', 'related-posts-thumbnails' ); ?></label><br />
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Post types', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<?php if ( is_array( $post_types ) && count( $post_types ) ) :  ?>
+										<?php foreach ( $post_types as $post_type ) : ?>
+										<input type="checkbox" name="relpoststh_post_types[]" id="pt_<?php echo $post_type; ?>" value="<?php echo $post_type; ?>" <?php if ( in_array( $post_type, $relpoststh_post_types ) ) { echo 'checked="checked"'; } ?>/>
+										<label for="pt_<?php echo $post_type; ?>"><?php echo $post_type; ?></label>
+										<?php endforeach; ?>
+										<?php endif; ?>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Categories on which related thumbnails will appear', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<?php $this->display_categories_list( $relpoststh_categoriesall, $categories, $relpoststh_categories, 'relpoststh_categoriesall', 'relpoststh_categories' ); ?>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Categories that will appear in related thumbnails', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<?php $this->display_categories_list( $relpoststh_show_categoriesall, $categories, $relpoststh_show_categories, 'relpoststh_show_categoriesall', 'relpoststh_show_categories' ); ?>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><?php _e( 'Include only posts after', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<?php _e( 'Year', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_year" size="4" value="<?php if ( isset( $relpoststh_startdate[0] ) ) { echo $relpoststh_startdate[0]; } ?>"> <?php _e( 'Month', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_month" size="2" value="<?php if ( isset( $relpoststh_startdate[1] ) ) { echo $relpoststh_startdate[1]; } ?>"> <?php _e( 'Day', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_day" size="2" value="<?php if ( isset( $relpoststh_startdate[2] ) ) { echo $relpoststh_startdate[2]; } ?>"> <label for="relpoststh_excerptlength"><?php _e( 'Leave empty for all posts dates', 'related-posts-thumbnails' ); ?></label><br />
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><?php _e( 'Top text', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="text" name="relpoststh_top_text" value="<?php echo stripslashes( htmlspecialchars( get_option( 'relpoststh_top_text', $this->top_text ) ) ); ?>" size="50"/>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><?php _e( 'Number of similar posts to display', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="text" name="relpoststh_number" value="<?php echo get_option( 'relpoststh_number', $this->number ); ?>" size="2"/>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><?php _e( 'Default image URL', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="text" name="relpoststh_default_image" value="<?php echo get_option( 'relpoststh_default_image', $this->default_image );?>" size="50"/>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<select name="relpoststh_thsource"  id="relpoststh_thsource">
+											<?php foreach ( $thsources as $name => $title ) : ?>
+											<option value="<?php echo $name; ?>" <?php if ( $relpoststh_thsource == $name ) { echo 'selected'; } ?>><?php echo $title; ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="postbox" style="padding: 20px" id="relpoststh-post-thumbnails" <?php if ( $relpoststh_thsource != 'post-thumbnails' ) : ?> style="display:none" <?php endif; ?>>
+							<h2><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</h2>
+							<table class="form-table">
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Post-thumbnails name', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<select name="relpoststh_poststhname">
+											<?php foreach ( $available_sizes as $size_name => $size ) : ?>
+											<option <?php if ( $size_name == get_option( 'relpoststh_poststhname', $this->poststhname ) ) { echo 'selected'; } ?>><?php echo $size_name; ?></option>
+											<?php endforeach; ?>
+										</select>
+										<?php if ( ! current_theme_supports( 'post-thumbnails' ) ) : ?>
+										(<?php _e( 'Your theme has to support post-thumbnails to have more choices', 'related-posts-thumbnails' ); ?>)
+										<?php endif; ?>
+									</td>
+								</tr>
+								<?php if ( current_theme_supports( 'post-thumbnails' ) ) :  ?>
+								<tr>
+									<th scope="row"><?php _e( 'Show posts only with thumbnails', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="checkbox" name="onlywiththumbs" id="onlywiththumbs" value="1" <?php if ( $onlywiththumbs ) { echo 'checked="checked"'; } ?>/>
+										<label for="onlywiththumbs"><?php _e( 'Only posts with assigned Featured Image', 'related-posts-thumbnails' ); ?></label><br />
+									</td>
+								</tr>
+								<?php endif; ?>
+							</table>
+						</div>
+						<div class="postbox" style="padding: 20px" id="relpoststh-custom-field" <?php if ( $relpoststh_thsource != 'custom-field' ) : ?> style="display:none" <?php endif; ?>>
+							<h2><?php _e( 'Thumbnails source', 'related-posts-thumbnails' ); ?>:</h2>
+							<table class="form-table">
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Custom field name', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="text" name="relpoststh_customfield" value="<?php echo get_option( 'relpoststh_customfield', $this->custom_field );?>" size="50"/>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Size', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<?php _e( 'Width', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_customwidth" value="<?php echo get_option( 'relpoststh_customwidth', $this->custom_width );?>" size="3"/>px x
+										<?php _e( 'Height', 'related-posts-thumbnails' ); ?>: <input type="text" name="relpoststh_customheight" value="<?php echo get_option( 'relpoststh_customheight', $this->custom_height );?>" size="3"/>px
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Theme resize url', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<input type="text" name="relpoststh_theme_resize_url" value="<?php echo get_option( 'relpoststh_theme_resize_url', '' );?>" size="50"/>
+										(<?php _e( 'If your theme resizes images, enter URL to its resizing PHP file', 'related-posts-thumbnails' ); ?>)
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="postbox" style="padding: 20px">
+							<h2><?php _e( 'Style options', 'related-posts-thumbnails' ); ?>:</h2>
+							<table class="form-table">
+								<tr>
+									<th scope="row"><?php _e( 'Output style', 'related-posts-thumbnails' ); ?>:</th>
+									<td>
+										<select name="relpoststh_output_style"  id="relpoststh_output_style">
+											<?php foreach ( $output_styles as $name => $title ) : ?>
+											<option value="<?php echo $name; ?>" <?php if ( $relpoststh_output_style == $name ) { echo 'selected'; } ?>><?php echo $title; ?></option>
+											<?php endforeach; ?>
+										</select>
+										<span id="relpoststh_cleanhtml" style="display: <?php if ( $relpoststh_output_style == 'list' ) { echo 'inline';
+			} else { echo 'none'; }?>;"><?php _e( 'Turn off plugin styles', 'related-posts-thumbnails' ); ?> <input type="checkbox" name="relpoststh_cleanhtml" <?php if ( $relpoststh_cleanhtml ) { echo 'checked="checked"'; } ?> /></span>
 						</td>
 					</tr>
 					<tr valign="top">
