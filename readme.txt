@@ -3,7 +3,7 @@ Contributors: marynixie
 Donate link: http://wordpress.shaldybina.com/donate
 Tags: related, posts, thumbnail
 Requires at least: 2.9
-Tested up to: 4.4.2
+Tested up to: 4.5.2
 Stable tag: 1.4.0
 
 Customizable plugin, that nicely displays related posts thumbnails under the post.
