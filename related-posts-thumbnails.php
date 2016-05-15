@@ -508,8 +508,10 @@ class RelatedPostsThumbnails {
 					update_option( 'relpoststh_number', absint( $_POST['relpoststh_number'] ) );
 				}
 
+				if( isset( $_POST['relpoststh_relation'] ) ) {
+					update_option( 'relpoststh_relation', sanitize_text_field( wp_unslash( $_POST['relpoststh_relation'] ) ) );
+				}
 
-				update_option( 'relpoststh_relation', $_POST['relpoststh_relation'] );
 				update_option( 'relpoststh_default_image', $_POST['relpoststh_default_image'] );
 				update_option( 'relpoststh_poststhname', $_POST['relpoststh_poststhname'] );
 				update_option( 'relpoststh_background', $_POST['relpoststh_background'] );
