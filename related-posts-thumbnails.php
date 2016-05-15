@@ -518,22 +518,68 @@ class RelatedPostsThumbnails {
 
 				if( isset( $_POST['relpoststh_poststhname'] ) ) {
 					update_option( 'relpoststh_poststhname', sanitize_text_field( wp_unslash( $_POST['relpoststh_poststhname'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_background'] ) ) {
+					update_option( 'relpoststh_background', sanitize_text_field( wp_unslash( $_POST['relpoststh_background'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_hoverbackground'] ) ) {
+					update_option( 'relpoststh_hoverbackground', sanitize_text_field( wp_unslash( $_POST['relpoststh_hoverbackground'] ) ) );
+				}
+
+
+				if( isset( $_POST['relpoststh_bordercolor'] ) ) {
+					update_option( 'relpoststh_bordercolor', sanitize_text_field( wp_unslash( $_POST['relpoststh_bordercolor'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_fontcolor'] ) ) {
+					update_option( 'relpoststh_fontcolor', sanitize_text_field( wp_unslash( $_POST['relpoststh_fontcolor'] ) ) );
 				}				
 
-				update_option( 'relpoststh_background', $_POST['relpoststh_background'] );
-				update_option( 'relpoststh_hoverbackground', $_POST['relpoststh_hoverbackground'] );
-				update_option( 'relpoststh_bordercolor', $_POST['relpoststh_bordercolor'] );
-				update_option( 'relpoststh_fontcolor', $_POST['relpoststh_fontcolor'] );
-				update_option( 'relpoststh_fontsize', $_POST['relpoststh_fontsize'] );
-				update_option( 'relpoststh_fontfamily', $_POST['relpoststh_fontfamily'] );
-				update_option( 'relpoststh_textlength', $_POST['relpoststh_textlength'] );
-				update_option( 'relpoststh_excerptlength', $_POST['relpoststh_excerptlength'] );
-				update_option( 'relpoststh_thsource', $_POST['relpoststh_thsource'] );
-				update_option( 'relpoststh_customfield', $_POST['relpoststh_customfield'] );
-				update_option( 'relpoststh_theme_resize_url', $_POST['relpoststh_theme_resize_url'] );
-				update_option( 'relpoststh_customwidth', $_POST['relpoststh_customwidth'] );
-				update_option( 'relpoststh_customheight', $_POST['relpoststh_customheight'] );
-				update_option( 'relpoststh_textblockheight', $_POST['relpoststh_textblockheight'] );
+				if( isset( $_POST['relpoststh_fontsize'] ) ) {
+					update_option( 'relpoststh_fontsize', sanitize_text_field( wp_unslash( $_POST['relpoststh_fontsize'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_fontfamily'] ) ) {
+					update_option( 'relpoststh_fontfamily', sanitize_text_field( wp_unslash( $_POST['relpoststh_fontfamily'] ) ) );
+				}			
+
+				if( isset( $_POST['relpoststh_textlength'] ) ) {
+					update_option( 'relpoststh_textlength', sanitize_text_field( wp_unslash( $_POST['relpoststh_textlength'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_excerptlength'] ) ) {
+					update_option( 'relpoststh_excerptlength', sanitize_text_field( wp_unslash( $_POST['relpoststh_excerptlength'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_thsource'] ) ) {
+					update_option( 'relpoststh_thsource', sanitize_text_field( wp_unslash( $_POST['relpoststh_thsource'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_customfield'] ) ) {
+					update_option( 'relpoststh_customfield', sanitize_text_field( wp_unslash( $_POST['relpoststh_customfield'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_theme_resize_url'] ) ) {
+					update_option( 'relpoststh_theme_resize_url', sanitize_text_field( wp_unslash( $_POST['relpoststh_theme_resize_url'] ) ) );
+				}												
+
+				if( isset( $_POST['relpoststh_customwidth'] ) ) {
+					update_option( 'relpoststh_customwidth', sanitize_text_field( wp_unslash( $_POST['relpoststh_customwidth'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_customheight'] ) ) {
+					update_option( 'relpoststh_customheight', sanitize_text_field( wp_unslash( $_POST['relpoststh_customheight'] ) ) );
+				}	
+
+				if( isset( $_POST['relpoststh_textblockheight'] ) ) {
+					update_option( 'relpoststh_textblockheight', sanitize_text_field( wp_unslash( $_POST['relpoststh_textblockheight'] ) ) );
+				}
+
+				if( isset( $_POST['relpoststh_customwidth'] ) ) {
+					update_option( 'relpoststh_customwidth', sanitize_text_field( wp_unslash( $_POST['relpoststh_customwidth'] ) ) );
+				}															
 
 				if( isset( $_POST['relpoststh_categories'] ) ) {
 					update_option( 'relpoststh_categories', array_map( 'sanitize_text_field', wp_unslash( $_POST['relpoststh_categories'] ) ) );
