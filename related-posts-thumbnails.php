@@ -752,7 +752,167 @@ class RelatedPostsThumbnails {
 					});
 				});
 			</script>
-			<div class="wrap">
+			<style>
+				#relpoststh-settings .nav-tab-wrapper li a {
+				  float: none;
+				  margin:0;
+				  padding: 7px 20px;
+				  display: block;
+				  height: auto;
+				  background: none;
+				}
+
+				#relpoststh-settings .nav-tab-wrapper li{
+				  margin-bottom: 0;
+				  margin-left: -1px;
+				}
+				#relpoststh-settings::after{
+				  display: table;
+				  content: "";
+				  clear: both;
+				}
+				#relpoststh-settings{
+				  display: table;
+				  width: calc(100% - 2px);
+				  border:1px solid #ccc;
+				  margin: 0;
+				}
+
+				.relpoststh .wpbr-tabsWrapper{
+				  width: calc(100% - 250px);
+				  float: left;
+				}
+				#relpoststh-settings .nav-tab-wrapper{
+				  display: table-cell;
+				  vertical-align: top;
+				  width: 202px;
+				}
+				.relpoststh .form-table th:first-child{
+				   width: 110px;
+				}
+				.relpoststh #relpoststh-settings .metabox-holder{
+				  display: table-cell;
+				  padding: 10px;
+				  background: #fff;
+				}
+				#relpoststh-settings .nav-tab-wrapper li:first-child{
+				  margin-top: -1px;
+				}
+				#relpoststh-settings .nav-tab-wrapper li a.nav-tab-active{
+				  background: #fff;
+				}
+				#relpoststh-settings .nav-tab-wrapper li a.nav-tab-active{
+				  border-right: transparent;
+				}
+				#relpoststh-settings .nav-tab-wrapper li:last-child a{
+				  border-bottom: 1px solid #ccc;
+				}
+				.relpoststh #the-list .approve{
+				  display: block;
+				}
+				.relpoststh .postbox{
+				  padding: 10px;
+				}
+				.relpoststh .wpbr-sidebar{
+				  width: 235px;
+				  float: right;
+				  min-width: inherit;
+				  box-sizing: border-box;
+				}
+				.relpoststh .wpbr-sidebar .postbox{
+				  min-width: inherit;
+				  width: auto;
+				}
+				.relpoststh .wpbr-sidebar ul li a{
+				  width: 100%;
+				  display: block;
+				}
+				.relpoststh .wpbr-sidebar .wp-core-ui .button{
+				  position: relative;
+				}
+				.relpoststh .wpbr-sidebar .dashicons{
+				  position: absolute;
+				  right: 10px;
+				  margin-top: 3px;
+				}
+				.relpoststh .postbox ul li a{
+				   position: relative;
+				}
+
+				.relpoststh .wpbr-button-container{
+				  padding: 10px 0;
+				  overflow: hidden;
+				}
+				.relpoststh .wpbr-social-links a{
+				  text-decoration: none;
+				}
+				.relpoststh .wpbr-button-container{
+				  padding: 10px;
+				  overflow: hidden;
+				  border:1px solid #ccc;
+
+				}
+				.relpoststh .wpbr-button-container.top{
+				  border-bottom: 0;
+				}
+				.relpoststh .wpbr-button-container.bottom{
+				  border-top: 0;
+				}
+				.relpoststh .wpbrmedia-settings-submit{
+				  float:right;
+				}
+				.relpoststh .wpbr-sidebar h2{
+				  margin: 0;
+				  padding: 10px;
+				  border-bottom: 1px solid #ccc;
+				}
+				.relpoststh .wpbr-sidebar ul li .twitter .dashicons {
+				    color: #45b0e3;
+				}
+				.relpoststh .wpbr-sidebar ul li .facebook .dashicons {
+				    color: #3b5998;
+				}
+				.relpoststh .wpbr-sidebar ul li .wordpress .dashicons {
+				    color: #21759b;
+				}
+				.relpoststh .wpbr-sidebar ul li .rss .dashicons {
+				    color: #FF6600;
+				}
+				#relpoststh-settings p.submit{
+				  display: none;
+				}
+				.relpoststh #wpbr_custom_css .form-table th{
+				   width: 0;
+				}
+				.relpoststh #wpbr_custom_css .form-table td{
+				   width: 100%;
+				}
+				.relpoststh .wpbr-wrap:after{
+				   content: '';
+				   display: table;
+				   clear: both;
+				}
+
+				.relpoststh .metabox-holder{
+				   padding-top: 0 !important;
+				   padding-right: 15px !important;
+				}
+
+				.relpoststh .setting-notification{
+				   position: absolute;
+				   width: auto;
+				   padding: 16px 10px;
+				   left: 0;
+				   top: 0;
+				   background-color: #fcf8e3;
+				   color: #c09853;
+				   height: 100%;
+				   box-sizing: border-box;
+				   display: none;
+				}
+
+			</style>
+			<div class="wrap relpoststh">
 				<div class="icon32" id="icon-options-general"><br></div>
 				<h2><?php _e( 'Related Posts Thumbnails Settings', 'related-posts-thumbnails' ); ?></h2>
 
@@ -768,7 +928,7 @@ class RelatedPostsThumbnails {
 	                	<input type="submit" name="Submit" class="wpbrmedia-settings-submit button button-primary button-big" value="<?php esc_html_e( 'Save Settings','reviewpress' );?>" id="wpbr_save_setting_top">
 	                </div>
 					
-					<div id="review-setting" class="">
+					<div id="relpoststh-settings" class="">
 						<ul class="nav-tab-wrapper">
 							<li> <a href="#wpbr_display" class="nav-tab nav-tab-active" id="wpbr_rpt_general_options">General Display Options</a> </li>
 							<li> <a href="#wpbr_reviews" class="nav-tab" id="wpbr_rpt_thumbnails_source">Thumbnails source</a> </li>
