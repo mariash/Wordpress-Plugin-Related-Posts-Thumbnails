@@ -923,9 +923,9 @@ class RelatedPostsThumbnails {
 				<div class="wpbr-wrap"><div class="wpbr-tabsWrapper">
 					<div class="wpbr-button-container top">
 							<div class="setting-notification">
-								<?php echo __( 'Settings have changed, you should save them!' , 'reviewpress' ); ?>
+								<?php echo __( 'Settings have changed, you should save them!' , 'related-posts-thumbnails' ); ?>
 							</div>
-	                	<input type="submit" name="Submit" class="wpbrmedia-settings-submit button button-primary button-big" value="<?php esc_html_e( 'Save Settings','reviewpress' );?>" id="wpbr_save_setting_top">
+	                	<input type="submit" name="Submit" class="wpbrmedia-settings-submit button button-primary button-big" value="<?php esc_html_e( 'Save Settings','related-posts-thumbnails' );?>" id="wpbr_save_setting_top">
 	                </div>
 					
 					<div id="relpoststh-settings" class="">
@@ -1175,40 +1175,33 @@ class RelatedPostsThumbnails {
 													</tr>
 												</table>
 							</div>
-							<input name="Submit" value="<?php _e( 'Save Changes', 'related-posts-thumbnails' ); ?>" type="submit" class="button-primary">
+							<!-- <input name="Submit" value="<?php _e( 'Save Changes', 'related-posts-thumbnails' ); ?>" type="submit" class="button-primary"> -->
 						</div>
 					</div>
 
 					<div class="wpbr-button-container bottom">
 		                  <div class="wpbr-social-links alignleft">
-		                  <a href="https://twitter.com/wpbrigade" class="twitter" target="_blank"><span class="dashicons dashicons-twitter"></span></a>
-		                  <a href="https://www.facebook.com/WPBrigade" class="facebook" target="_blank"><span class="dashicons dashicons-facebook"></span></a>
-		                  <a href="https://profiles.wordpress.org/WPBrigade/" class="wordpress" target="_blank"><span class="dashicons dashicons-wordpress"></span></a>
-		                  <a href="http://wpbrigade.com/feed/" class="rss" target="_blank"><span class="dashicons dashicons-rss"></span></a>
+		                  	<a href="https://profiles.wordpress.org/marynixie/" class="wordpress" target="_blank"><span class="dashicons dashicons-wordpress"></span></a>
 		                  </div>
-		                  <input type="submit" class="wpbrmedia-settings-submit button button-primary button-big" value="<?php esc_html_e( 'Save Settings','reviewpress' ); ?>" id="wpbr_save_setting_bottom">
+		                  <input type="submit" name="Submit" class="wpbrmedia-settings-submit button button-primary button-big" value="<?php esc_html_e( 'Save Settings','related-posts-thumbnails' ); ?>" id="wpbr_save_setting_bottom">
 		                  </div>
 					</div>
 
 				    <div class="metabox-holder wpbr-sidebar">
 		              <div class="sidebar postbox">
-						 <h2><?php esc_html_e( 'Spread the Word' , 'reviewpress' )?></h2>
+						 <h2><?php esc_html_e( 'Spread the Word' , 'related-posts-thumbnails' )?></h2>
 			            <ul>
 							<li>
-								<a href="http://twitter.com/share?text=This is Best WordPress Review  Plugin&url=http://wordpress.org&hashtags=ReviewPress,WordPress" data-count="none"  class="button twitter" target="_blank" title="Post to Twitter Now"><?php esc_html_e( 'Share on Twitter' , 'reviewpress' )?><span class="dashicons dashicons-twitter"></span></a>
+								<a href="http://twitter.com/share?text=This is Best Related Post Thumbnails Plugin for WordPress&url=https://wordpress.org/support/view/plugin-reviews/related-posts-thumbnails" data-count="none"  class="button twitter" target="_blank" title="Post to Twitter Now"><?php esc_html_e( 'Share on Twitter' , 'related-posts-thumbnails' )?><span class="dashicons dashicons-twitter"></span></a>
 							</li>
 
 							<li>
-								<a href="https://www.facebook.com/sharer/sharer.php?u=https://wordpress.org" class="button facebook" target="_blank" title="Post to Facebook Now"><?php esc_html_e( 'Share on Facebook' , 'reviewpress' )?><span class="dashicons dashicons-facebook"></span>
+								<a href="https://www.facebook.com/sharer/sharer.php?u=https://wordpress.org/support/view/plugin-reviews/related-posts-thumbnails" class="button facebook" target="_blank" title="Share with your facebook friends about this awesome plugin."><?php esc_html_e( 'Share on Facebook' , 'related-posts-thumbnails' )?><span class="dashicons dashicons-facebook"></span>
 								</a>
 							</li>
 
 							<li>
-								<a href="#" class="button wordpress" target="_blank" title="Rate on Wordpress.org"><?php esc_html_e( 'Rate on Wordpress.org' , 'reviewpress' )?><span class="dashicons dashicons-wordpress"></span>
-								</a>
-							</li>
-							<li>
-								<a href="http://wpbrigade.com/feed/" class="button rss" target="_blank" title="Subscribe to our Feeds"><?php esc_html_e( 'Subscribe to our Feeds' , 'reviewpress' )?><span class="dashicons dashicons-rss"></span>
+								<a href="https://wordpress.org/support/view/plugin-reviews/related-posts-thumbnails?filter=5" class="button wordpress" target="_blank" title="Rate on Wordpress.org"><?php esc_html_e( 'Rate on Wordpress.org' , 'related-posts-thumbnails' )?><span class="dashicons dashicons-wordpress"></span>
 								</a>
 							</li>
 						</ul>
