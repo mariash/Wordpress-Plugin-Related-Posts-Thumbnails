@@ -930,10 +930,10 @@ class RelatedPostsThumbnails {
 					
 					<div id="relpoststh-settings" class="">
 						<ul class="nav-tab-wrapper">
-							<li> <a href="#wpbr_display" class="nav-tab nav-tab-active" id="wpbr_rpt_general_options">General Display Options</a> </li>
-							<li> <a href="#wpbr_reviews" class="nav-tab" id="wpbr_rpt_thumbnails_source">Thumbnails source</a> </li>
-							<li> <a href="#wpbr_form" class="nav-tab" id="wpbr_rpt_style_options">Style options:</a> </li>
-							<li> <a href="#wpbr_custom_css" class="nav-tab" id="wpbr_rpt_relation_options">Relation Builder Options</a> </li>
+							<li> <a href="#nogo" class="nav-tab nav-tab-active" id="wpbr_rpt_general_options">General Display Options</a> </li>
+							<li> <a href="#nogo" class="nav-tab" id="wpbr_rpt_thumbnails_source">Thumbnails source</a> </li>
+							<li> <a href="#nogo" class="nav-tab" id="wpbr_rpt_style_options">Style options:</a> </li>
+							<li> <a href="#nogo" class="nav-tab" id="wpbr_rpt_relation_options">Relation Builder Options</a> </li>
 						</ul>
 
 						<div class="metabox-holder">
