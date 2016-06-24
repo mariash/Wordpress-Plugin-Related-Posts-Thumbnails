@@ -1,12 +1,12 @@
 === Related Posts Thumbnails ===
 Contributors: marynixie
 Donate link: http://wordpress.shaldybina.com/donate
-Tags: related, posts, thumbnail
+Tags: related, posts, thumbnails, Related Content, related posts, pages, similar posts, shortcodes, widgets
 Requires at least: 2.9
-Tested up to: 4.5.2
-Stable tag: 1.4.0
+Tested up to: 4.5.3
+Stable tag: 1.5.0
 
-Customizable plugin, that nicely displays related posts thumbnails under the post.
+The Best Customizable plugin, that nicely displays related posts thumbnails under the post.
 
 == Description ==
 
@@ -20,7 +20,7 @@ You can specify number of related posts to display, start date, categories to sh
 
 Contributions:
 
-* Thanks to <a href="http://adnan.pk/">Adnan</a> for updates to make it compatible with Wordpress 4.4
+* Thanks to <a href="http://adnan.pk/">Adnan</a> for updates to make it compatible with Wordpress 4.4 and 4.5
 
 Translations:
 
@@ -64,6 +64,9 @@ If there are no images of the specified size in the post, or file does not exist
 1. Plugin settings page
 
 == Changelog ==
+
+= 1.5.0
+* Major UI changes for admin settings and compatibility with WP 4.5
 
 = 1.4.0
 * compatibility with WP 4.4
@@ -142,6 +145,9 @@ If there are no images of the specified size in the post, or file does not exist
 * Released plugin initial version
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+Major UI changes for admin settings and compatibility with WP 4.5
 
 = 1.3 =
 Added support of custom types and taxonomies, fixed double quotes and shortcodes
