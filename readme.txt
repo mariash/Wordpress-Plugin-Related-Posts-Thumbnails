@@ -4,7 +4,7 @@ Donate link: http://wordpress.shaldybina.com/donate
 Tags: related, posts, thumbnails, Related Content, related posts, pages, similar posts, shortcodes, widgets
 Requires at least: 2.9
 Tested up to: 4.5.3
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 
 The Best Customizable plugin, that nicely displays related posts thumbnails under the post.
 
@@ -65,10 +65,13 @@ If there are no images of the specified size in the post, or file does not exist
 
 == Changelog ==
 
-= 1.5.0
+= 1.5.1 =
+* [BugFix] Removed deprecated constructors for Related Posts widget. Compatible with PHP 7.0
+
+= 1.5.0 =
 * Major UI changes for admin settings and compatibility with WP 4.5
 
-= 1.4.0
+= 1.4.0 =
 * compatibility with WP 4.4
 
 = 1.3.1 =
@@ -145,6 +148,10 @@ If there are no images of the specified size in the post, or file does not exist
 * Released plugin initial version
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+
+[BugFix] Removed deprecated constructors for Related Posts widget. Compatible with PHP 7.0
 
 = 1.5.0 =
 Major UI changes for admin settings and compatibility with WP 4.5
