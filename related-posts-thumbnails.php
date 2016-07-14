@@ -3,7 +3,7 @@
  * Plugin Name:  Related Posts Thumbnails
  * Plugin URI:   http://wordpress.shaldybina.com/plugins/related-posts-thumbnails/
  * Description:  Showing related posts thumbnails under the post.
- * Version:      1.5.1
+ * Version:      1.5.2
  * Author:       Maria Shaldybina
  * Author URI:   http://shaldybina.com/
  */
@@ -47,6 +47,17 @@ class RelatedPostsThumbnails {
 	var $output_style      = 'div';
 	var $post_types        = array( 'post' );
 	var $custom_taxonomies = array();
+
+	protected $wp_kses_rp_args = array( 
+
+						'h1' => array(),
+						'h2' => array(),
+						'h3' => array(),
+						'h4' => array(),
+						'h5' => array(),
+						'h6' => array(),
+						'strong' => array(),
+					);
 
 	function __construct() {
 		// initialization
@@ -500,7 +511,7 @@ class RelatedPostsThumbnails {
 				}
 
 				if( isset( $_POST['relpoststh_top_text'] ) ) {
-					update_option( 'relpoststh_top_text', sanitize_text_field( wp_unslash( $_POST['relpoststh_top_text'] ) ) );
+					update_option( 'relpoststh_top_text', wp_kses( $_POST['relpoststh_top_text'], $this->wp_kses_rp_args ) );
 				}
 
 

@@ -1,10 +1,10 @@
 === Related Posts Thumbnails ===
 Contributors: marynixie
 Donate link: http://wordpress.shaldybina.com/donate
-Tags: related, posts, thumbnails, Related Content, related posts, pages, similar posts, shortcodes, widgets
+Tags: related, posts, thumbnails, Related Content, related posts, pages, similar posts, shortcodes, widgets, related thumbs
 Requires at least: 2.9
 Tested up to: 4.5.3
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 
 The Best Customizable plugin, that nicely displays related posts thumbnails under the post.
 
@@ -20,7 +20,7 @@ You can specify number of related posts to display, start date, categories to sh
 
 Contributions:
 
-* Thanks to <a href="http://adnan.pk/">Adnan</a> for updates to make it compatible with Wordpress 4.4 and 4.5
+* Thanks to <a href="http://adnan.pk/">Adnan</a> for giving life to this plugin.
 
 Translations:
 
@@ -64,6 +64,9 @@ If there are no images of the specified size in the post, or file does not exist
 1. Plugin settings page
 
 == Changelog ==
+
+= 1.5.2 =
+* [BugFix] Top Text title allows h1 to h6 tags now.
 
 = 1.5.1 =
 * [BugFix] Removed deprecated constructors for Related Posts widget. Compatible with PHP 7.0
@@ -148,6 +151,9 @@ If there are no images of the specified size in the post, or file does not exist
 * Released plugin initial version
 
 == Upgrade Notice ==
+
+= 1.5.2 = 
+* [BugFix] Top Text title allows h1 to h6 tags now.
 
 = 1.5.1 =
 
